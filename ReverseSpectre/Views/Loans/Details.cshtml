@@ -1,0 +1,66 @@
+﻿@model ReverseSpectre.Models.Loan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Loan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LoanTerm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoanTerm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PropertyAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PropertyAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfProperty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfProperty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfPropertyInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfPropertyInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContractPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Seller)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seller)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LoanId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

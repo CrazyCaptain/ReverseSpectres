@@ -1,0 +1,122 @@
+﻿@model ReverseSpectre.Models.EmploymentInformation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EmploymentInformation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SourceOfFunds)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SourceOfFunds)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SourceOfFundsInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SourceOfFundsInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormOfBusiness)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormOfBusiness)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployerBusinessAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployerBusinessAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NatureOfJob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NatureOfJob)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YrsInJob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YrsInJob)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsOverseas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsOverseas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeExpired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeExpired)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmploymentInformationId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

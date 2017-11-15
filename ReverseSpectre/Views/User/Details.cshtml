@@ -1,0 +1,45 @@
+﻿@model ReverseSpectre.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row" style="margin-top:40px;">
+    <div class="col-md-7">
+        <h4>User Info</h4>
+        <hr />
+        <strong>Name:</strong> @Model.LastName, @Model.FirstName @Model.MiddleName
+    </div>
+
+    <div class="col-md-5">
+        <h4>Mobile Numbers</h4>
+        <hr />
+        @if(Model.MobileNumbers.Count() == 0)
+        {
+            <text>No mobile numbers.</text>
+        }else
+        {
+            foreach(var m in Model.MobileNumbers)
+            {
+                <p>
+                    @m.MobileNo - 
+                    @if (m.Token != null)
+                    {
+                        <font style="color:#006c34">Verified</font>
+                    }else
+                    {
+                        <font style="color:#a12525">Not Verified</font>
+                    }
+                    -
+                    @if (m.IsPrimary)
+                    {
+                        <font style="color:#0e5ca7">Primary</font>
+                    }
+                </p>
+            }
+        }
+        <hr />
+        <a href="@Url.Action("AddMobileNumber")" class="pull-right btn btn-xs btn-info">Add Mobile Number</a>
+    </div>
+</div>
+

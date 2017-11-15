@@ -5,37 +5,129 @@
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Create a new account.</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.MiddleName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Gender, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Gender, Model.GenderList, new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.CivilStatus, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.CivilStatus, Model.CivilStatusList, new { @class = "form-control" })
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.DateOfBirth, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.DateOfBirth, new { @class = "form-control", @type = "date", @max = DateTime.UtcNow.AddHours(8).ToString("yyyy-MM-dd") })
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Nationality, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.Nationality, Model.CitizenshipList, new { @class="form-control" })
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.NationalityInfo, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.NationalityInfo, new { @class = "form-control", @disabled="true" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-10" style="text-align:right;">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).on("change", "#Nationality", function(){
+            if ($("#Nationality").val() == 1 || $("#Nationality").val() == 2) {
+                $("#NationalityInfo").attr("disabled", false).attr("required",true);
+            } else {
+                $("#NationalityInfo").attr("disabled", true).attr("required", false);
+            }
+        });
+
+        $(document).on("change", "#DateOfBirth", function () {
+            var dob = $('#DateOfBirth').val();
+            dob = new Date(dob);
+            var today = new Date();
+            var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+            
+            if(age < 21){
+                alert("You must be at least 21 to apply for a loan, your age is " + age + " years old. :/");
+                $('#DateOfBirth').val("");
+            } else {
+
+            }
+        })
+    </script>
+}
+
+@section Styles{
+    <style>
+        form .row{
+            margin-bottom:20px;
+        }
+    </style>    
 }

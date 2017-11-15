@@ -139,7 +139,8 @@ namespace ReverseSpectre.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            return View(model);
         }
 
         //
@@ -151,7 +152,10 @@ namespace ReverseSpectre.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName=model.FirstName, LastName=model.LastName,
+                    MiddleName =model.MiddleName, DateOfBirth=model.DateOfBirth, Nationality=model.Nationality, NationalityInfo=model.NationalityInfo,
+                    CivilStatus =model.CivilStatus, Gender=model.Gender, IsDisabled = false };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

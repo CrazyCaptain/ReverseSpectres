@@ -2,7 +2,9 @@ namespace ReverseSpectre.Migrations
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -48,6 +50,41 @@ namespace ReverseSpectre.Migrations
             {
                 var role = new IdentityRole { Name = "SD" };
                 roleManager.Create(role);
+            }
+
+            /*seed users*/
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            userManager.UserValidator = new UserValidator<ApplicationUser>(userManager)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+            };
+
+            context.Banks.AddOrUpdate(
+                b => b.BranchName,
+                new Bank { BranchName = "Manila - Taft", IsDisabled = false },
+                new Bank { BranchName = "Mandaluyong - Boni", IsDisabled = false },
+                new Bank { BranchName = "Makati - Buendia", IsDisabled = false },
+                new Bank { BranchName = "San Juan - Green Hills", IsDisabled = false }
+            );
+
+            if (!context.Users.Any(u => u.UserName == "rm@gmail.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Relationship Manager A",
+                    MiddleName = "",
+                    LastName = "Test",
+                    UserName = "rm@gmail.com",
+                    Email = "rm@gmail.com",
+                    EmailConfirmed = true,
+                    IsDisabled = false,
+                    DateOfBirth = DateTime.UtcNow.AddHours(8),
+                    Bank = context.Banks.FirstOrDefault(b=>b.BranchName=="Manila - Taft")
+                };
+                userManager.Create(user, "Testing@123");
+                userManager.AddToRole(user.Id, "RM");
             }
         }
     }

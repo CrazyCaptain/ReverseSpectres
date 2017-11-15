@@ -25,7 +25,11 @@ namespace ReverseSpectre.Models
         public string NatureOfJob { get; set; }
         public byte YrsInJob { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public bool IsOverseas { get; set; } //determine if OFW
+
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
 
         public DateTime DateTimeCreated { get; set; }
         public DateTime? DateTimeExpired { get; set; }
@@ -58,6 +62,8 @@ namespace ReverseSpectre.Models
             return ((a+b)-c);
         }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
     }
 }

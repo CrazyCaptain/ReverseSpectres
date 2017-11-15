@@ -19,9 +19,33 @@ namespace ReverseSpectre.Models
         public bool IsDisabled { get; set; }
         public bool IsPrimary { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
 
         public virtual List<Message> Messages { get; set; }
+
+        public MobileNumber() { }
+
+        public MobileNumber(MobileNumberCreateModel m)
+        {
+            MobileNo = m.MobileNo;
+            UserId = m.UserId;
+            DateTimeCreated = DateTime.UtcNow.AddHours(8);
+            IsDisabled = false;
+            IsPrimary = m.IsPrimary;
+        }
+    }
+
+    public class MobileNumberCreateModel
+    {
+        [Required]
+        [Display(Name = "Mobile Number")]
+        [StringLength(11, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 11)]
+        public string MobileNo { get; set; }
+
+        public string UserId { get; set; }
+        public bool IsPrimary { get; set; }
     }
 
     public class Message
