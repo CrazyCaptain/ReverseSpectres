@@ -14,6 +14,8 @@ namespace ReverseSpectre.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+            userIdentity.AddClaim(new Claim("UserId", this.Id));
+
             return userIdentity;
         }
     }
@@ -29,6 +31,8 @@ namespace ReverseSpectre.Models
         public DbSet<Bank> Banks { get; set; }
         public DbSet<LoanType> LoanTypes { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<TwoFactorAuthSMS> TwoFactorAuthSMS { get; set; }
+        public DbSet<EmploymentInformation> EmploymentInformations { get; set; }
 
         // Loan
         public DbSet<LoanApplication> LoanApplication { get; set; }
@@ -40,6 +44,12 @@ namespace ReverseSpectre.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<EmploymentInformation>().HasRequired(t => t.Client).WithRequiredPrincipal(t => t.EmploymentInformation);
         }
 
         public System.Data.Entity.DbSet<ReverseSpectre.Models.RelationshipManager> RelationshipManagers { get; set; }

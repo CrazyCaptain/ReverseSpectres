@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ReverseSpectre.Models
 {
@@ -69,8 +70,8 @@ namespace ReverseSpectre.Models
         [Required]
         public string PermanentAddress { get; set; }
         [Required]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Must be a valid mobile number.")]
         public string MobileNumber { get; set; }
+        public string AccessToken { get; set; } // for sms query and alerts
         //[Required]
         //[DataType(DataType.EmailAddress, ErrorMessage = "Must be a vaild email.")]
         //public string Email { get; set; }
@@ -78,6 +79,8 @@ namespace ReverseSpectre.Models
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+
+        public virtual EmploymentInformation EmploymentInformation { get; set; }
     }
 
     public enum CivilStatusType
@@ -87,5 +90,72 @@ namespace ReverseSpectre.Models
         Widowed =3,
         Seperated = 4,
         Others = 5
+    }
+
+    public class TwoFactorAuthSMS
+    {
+        public int TwoFactorAuthSMSId { get; set; }
+
+        public int Code { get; set; }
+        public DateTime DateTimeCreated { get; set; }
+        public DateTime DateTimeExpiry { get; set; }
+        
+        public int LoanApplicationId { get; set; }
+        [ForeignKey("LoanApplicationId")]
+        public virtual LoanApplication LoanApplication { get; set; }
+    }
+
+    public class EmploymentInformation
+    {
+        public int EmploymentInformationId { get; set; }
+
+        public byte SourceOfFunds { get; set; } //Salary,Business,Commission/Fees,Remittance,Others
+        public string SourceOfFundsInfo { get; set; }
+
+        public string Employer { get; set; }
+        public string Position { get; set; }
+
+        public byte FormOfBusiness { get; set; } //Sole Proprietor,Partnership,Corporation
+
+        public string EmployerBusinessAddress { get; set; }
+        public string ContactNo { get; set; }
+        public string NatureOfJob { get; set; }
+        public byte YrsInJob { get; set; }
+
+        public bool IsOverseas { get; set; } //determine if OFW
+        
+        public int ClientId { get; set; }
+        [ForeignKey("ClientId")]
+        [Required]
+        public virtual Client Client { get; set; }
+
+        public DateTime DateTimeCreated { get; set; }
+        //public DateTime? DateTimeExpired { get; set; } // enable 1 to many, latest employment info
+
+        public IEnumerable<SelectListItem> SourceOfFundsList
+        {
+            get
+            {
+                return new List<SelectListItem>{
+                    new SelectListItem { Text = "Salary", Value = "0"},
+                    new SelectListItem { Text = "Business", Value = "1"},
+                    new SelectListItem { Text = "Commission/Fees", Value = "2"},
+                    new SelectListItem { Text = "Remittances", Value = "3"},
+                    new SelectListItem { Text = "Others", Value = "4"}
+                };
+            }
+        }
+
+        public IEnumerable<SelectListItem> FormOfBusinessList
+        {
+            get
+            {
+                return new List<SelectListItem>{
+                    new SelectListItem { Text = "Sole Proprietor", Value = "0"},
+                    new SelectListItem { Text = "Partnership", Value = "1"},
+                    new SelectListItem { Text = "Corporation", Value = "2"}
+                };
+            }
+        }
     }
 }
