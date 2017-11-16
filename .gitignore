@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/ReverseSpectre/ConnectionStrings.config
+/ReverseSpectre/AppSettingsSecrets.config

@@ -25,9 +25,23 @@ namespace ReverseSpectre.Models
         {
         }
 
+        // Bank
+        public DbSet<Bank> Banks { get; set; }
+        public DbSet<LoanType> LoanTypes { get; set; }
+        public DbSet<Client> Clients { get; set; }
+
+        // Loan
+        public DbSet<LoanApplication> LoanApplication { get; set; }
+        public DbSet<LoanApplicationDocument> LoanApplicationDocuments { get; set; }
+        public DbSet<LoanApplicationDocumentFile> LoanApplicationDocumentFiles { get; set; }
+        public DbSet<LoanApplicationPartner> LoanApplicationPartners { get; set; }
+        public DbSet<LoanApplicationReference> LoanApplicationReferences { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ReverseSpectre.Models.RelationshipManager> RelationshipManagers { get; set; }
     }
 }

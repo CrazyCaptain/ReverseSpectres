@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ReverseSpectre.Models.LoanApplication>
+
+@{
+    ViewBag.Title = "Loan Applications";
+}
+
+<h3>Loan Applications</h3>
+
+<p>
+    @Html.ActionLink("Apply for a loan", "CreateLoanApplication")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Loan Type
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            Term (months)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimestampCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoanStatus)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoanType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Term)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimestampCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoanStatus)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "LoanApplication", new { id = item.LoanApplicationId })
+        </td>
+    </tr>
+}
+
+</table>
