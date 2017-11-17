@@ -44,6 +44,7 @@ namespace ReverseSpectre.Models
         public string Nationality { get; set; }
         [Required]
         public CivilStatusType CivilStatus { get; set; }
+        public string MobileNumber { get; set; }
     }
 
     public class EmploymentInformationViewModel

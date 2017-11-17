@@ -35,6 +35,7 @@ namespace ReverseSpectre.Models
             Birthdate = client.Birthdate;
             Nationality = client.Nationality;
             UserId = user.Id;
+            MobileNumber = client.MobileNumber;
         }
 
         public int ClientId { get; set; }
