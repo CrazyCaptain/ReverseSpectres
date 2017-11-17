@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using ReverseSpectre.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -10,10 +11,10 @@ using System.Web.Mvc;
 
 namespace ReverseSpectre.Controllers
 {
-    public class SMSController : Controller
+    public class SmsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private string short_code = "21587087";
+        private string short_code = ConfigurationManager.AppSettings["SmsShortCode"];
 
         public ActionResult Redirect(string access_token, string subscriber_number)
         {
@@ -24,7 +25,7 @@ namespace ReverseSpectre.Controllers
 
             if (client != null)
             {
-                client.AccessToken = access_token;
+                client.SmsAccessToken = access_token;
                 db.SaveChanges();
 
                 Sms sms = new Sms(short_code, access_token);

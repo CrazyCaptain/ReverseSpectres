@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ReverseSpectre.Models;
+using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 
 namespace ReverseSpectre
 {
@@ -76,6 +78,44 @@ namespace ReverseSpectre
                     }
                 }
             }
+        }
+
+        public class SelectListHelper
+        {
+            public static IEnumerable<SelectListItem> SourceOfFundsList
+            {
+                get
+                {
+                    List<SelectListItem> list = new List<SelectListItem>();
+                    foreach (var item in Enum.GetValues(typeof(SourceOfFundsType)))
+                    {
+                        list.Add(new SelectListItem()
+                        {
+                            Text = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name,
+                            Value = ((int)item).ToString()
+                        });
+                    }
+                    return list;
+                }
+            }
+
+            public IEnumerable<SelectListItem> FormOfBusinessList
+            {
+                get
+                {
+                    List<SelectListItem> list = new List<SelectListItem>();
+                    foreach (var item in Enum.GetValues(typeof(FormOfBusinessType)))
+                    {
+                        list.Add(new SelectListItem()
+                        {
+                            Text = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name,
+                            Value = ((int)item).ToString()
+                        });
+                    }
+                    return list;
+                }
+            }
+
         }
 
         public class LoanRequirements

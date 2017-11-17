@@ -46,11 +46,11 @@ namespace ReverseSpectre.Models
             return new ApplicationDbContext();
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<EmploymentInformation>().HasRequired(t => t.Client).WithRequiredPrincipal(t => t.EmploymentInformation);
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<EmploymentInformation>().HasRequired(t => t.Client).WithRequiredPrincipal(t => t.EmploymentInformation);
+        //}
 
         public System.Data.Entity.DbSet<ReverseSpectre.Models.RelationshipManager> RelationshipManagers { get; set; }
     }

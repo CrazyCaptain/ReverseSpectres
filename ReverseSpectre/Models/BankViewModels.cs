@@ -42,19 +42,5 @@ namespace ReverseSpectre.Models
         public DateTime Birthdate { get; set; }
         [Required]
         public string Nationality { get; set; }
-        [Required]
-        public CivilStatusType CivilStatus { get; set; }
-
-        [Required]
-        public string TIN { get; set; }
-        [DisplayName("SSS/GIS")]
-        public string SSS { get; set; }
-        [Required]
-        public string CurrentAddress { get; set; }
-        [Required]
-        public string PermanentAddress { get; set; }
-        [Required]
-        [StringLength(11, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 11)]
-        public string MobileNumber { get; set; }
     }
 }
