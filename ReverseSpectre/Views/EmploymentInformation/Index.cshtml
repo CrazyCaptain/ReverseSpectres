@@ -1,0 +1,99 @@
+﻿@model IEnumerable<ReverseSpectre.Models.EmploymentInformation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Client.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SourceOfFunds)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SourceOfFundsInfo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormOfBusiness)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployerBusinessAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NatureOfJob)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YrsInJob)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsOverseas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTimeCreated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Client.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SourceOfFunds)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SourceOfFundsInfo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Position)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormOfBusiness)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployerBusinessAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NatureOfJob)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YrsInJob)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsOverseas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTimeCreated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmploymentInformationId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EmploymentInformationId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EmploymentInformationId })
+        </td>
+    </tr>
+}
+
+</table>

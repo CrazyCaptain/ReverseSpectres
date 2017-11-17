@@ -54,7 +54,7 @@ namespace ReverseSpectre.Models
         [Required]
         public string PermanentAddress { get; set; }
         [Required]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Must be a valid mobile number.")]
+        [StringLength(11, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 11)]
         public string MobileNumber { get; set; }
     }
 }

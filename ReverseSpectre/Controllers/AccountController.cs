@@ -159,7 +159,7 @@ namespace ReverseSpectre.Controllers
                     // Create client entry
                     using (ApplicationDbContext db = new ApplicationDbContext())
                     {
-                        db.Clients.Add(new Client(model, user));
+                        db.Clients.Add(new ReverseSpectre.Models.Client(model, user));
                         await db.SaveChangesAsync();
                     }
 

@@ -70,7 +70,7 @@ namespace ReverseSpectre.Controllers
             if (ModelState.IsValid)
             {
                 // Get client
-                Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+                ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
 
                 // Get loan (temporary)
                 var loanType = db.LoanTypes.First();
