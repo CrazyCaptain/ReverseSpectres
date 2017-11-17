@@ -299,6 +299,8 @@
     </Content>
     <Content Include="AppSettingsSecrets.config" />
     <Content Include="ConnectionStrings.config" />
+    <Content Include="fonts\Raleway-Regular.ttf" />
+    <Content Include="fonts\Raleway-SemiBold.ttf" />
     <None Include="Properties\PublishProfiles\reversehack - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\reversehack - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

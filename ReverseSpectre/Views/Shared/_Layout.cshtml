@@ -19,14 +19,22 @@
     </script>
 </head>
 <body>
-    @Html.Partial("_Navbar")
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    
+    <div class="body-content">
+        @Html.Partial("_Navbar")
+        <div class="container">
+            @RenderBody()
+        </div>
     </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <center>
+                @*<span>Powered by - Spectres.Solutions Inc.</span>*@
+                <span>Union Bank of the Philippines</span>
+            </center>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
