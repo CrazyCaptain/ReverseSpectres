@@ -245,3 +245,4 @@ ModelManifest.xml
 .fake/
 /ReverseSpectre/ConnectionStrings.config
 /ReverseSpectre/AppSettingsSecrets.config
+/ReverseSpectre/Properties/PublishProfiles

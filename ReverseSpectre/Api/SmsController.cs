@@ -6,19 +6,20 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 
-namespace ReverseSpectre.Controllers
+namespace ReverseSpectre.Api
 {
-    public class SmsController : Controller
+    public class SmsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private string short_code = ConfigurationManager.AppSettings["SmsShortCode"];
 
-        public ActionResult Redirect(string access_token, string subscriber_number)
+        public IHttpActionResult Redirect(string access_token, string subscriber_number)
         {
-            Trace.TraceInformation("Token: "+access_token+" Number: "+subscriber_number);
+            Trace.TraceInformation("Token: " + access_token + " Number: " + subscriber_number);
             string subscriber_number_p = "0" + subscriber_number;
 
             ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(c => c.MobileNumber == subscriber_number_p);
@@ -43,26 +44,29 @@ namespace ReverseSpectre.Controllers
                 Trace.TraceInformation("Mobile number doesn't exist.");
             }
 
-            return null;
+            return Ok();
         }
 
-        public ActionResult Inquiry()
+        public IHttpActionResult Inquiry(InboundSms sms)
         {
-            String data = new System.IO.StreamReader(Request.InputStream).ReadToEnd();
-            JObject result = JObject.Parse(data);
+            string customerMessage, customerNumber = string.Empty;
 
-            Trace.TraceInformation(data.ToString());
-
-            string customer_msg = result["inboundSMSMessageList"]["inboundSMSMessage"][0]["message"].ToString();
-            string customer_number = result["inboundSMSMessageList"]["inboundSMSMessage"][0]["senderAddress"].ToString();
+            if (!sms.InboundSmsMessageList.Any())
+                return BadRequest();
+            else
+            {
+                customerMessage = sms.InboundSmsMessageList.First().Message;
+                customerNumber = sms.InboundSmsMessageList[0].BaseSenderAddress;
+            }
+                
 
             // convert globe api format tel:+639 to 09
-            string mobile_number = "0" + customer_number.Substring(7);
-            
-            // log message
-            Trace.TraceInformation(customer_msg + " from " + mobile_number);
+            string mobileNumber = $"0{customerNumber}";
 
-            ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(c=>c.MobileNumber == mobile_number);
+            // log message
+            Trace.TraceInformation($"{customerMessage} from {mobileNumber}");
+
+            ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(c => c.MobileNumber == mobileNumber);
             // log client
             Trace.TraceInformation("Name: " + client.FirstName);
 
@@ -70,7 +74,7 @@ namespace ReverseSpectre.Controllers
             bool match = false;
 
             // explode string to array
-            string[] msg = customer_msg.ToLower().Split(' ');
+            string[] msg = customerMessage.ToLower().Split(' ');
 
             // log 1st word of message
             Trace.TraceInformation(msg[0]);
