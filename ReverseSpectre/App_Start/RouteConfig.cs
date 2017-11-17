@@ -13,6 +13,8 @@ namespace ReverseSpectre
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.LowercaseUrls = true;
+
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(

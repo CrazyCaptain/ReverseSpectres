@@ -11,14 +11,13 @@ using System.Configuration;
 
 namespace ReverseSpectre.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Client")]
     [RoutePrefix("client/loan")]
     [Route("{action=index}")]
     public class ClientLoanController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [Route]
         public ActionResult Index()
         {
             var model = db.LoanApplication.Include("LoanType").Where(m => m.Client.User.UserName == User.Identity.Name);

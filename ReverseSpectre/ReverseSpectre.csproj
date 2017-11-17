@@ -265,6 +265,10 @@
     <Compile Include="Migrations\201711170532235_added_nullable_in_Client_fields.Designer.cs">
       <DependentUpon>201711170532235_added_nullable_in_Client_fields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711170709484_minor_changes_in_EmployerInfo.cs" />
+    <Compile Include="Migrations\201711170709484_minor_changes_in_EmployerInfo.Designer.cs">
+      <DependentUpon>201711170709484_minor_changes_in_EmployerInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankModels.cs" />
@@ -382,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711170532235_added_nullable_in_Client_fields.resx">
       <DependentUpon>201711170532235_added_nullable_in_Client_fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711170709484_minor_changes_in_EmployerInfo.resx">
+      <DependentUpon>201711170709484_minor_changes_in_EmployerInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

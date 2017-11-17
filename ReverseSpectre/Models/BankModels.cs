@@ -76,25 +76,32 @@ namespace ReverseSpectre.Models
     {
         public int EmploymentInformationId { get; set; }
 
+        [Required]
         public SourceOfFundsType SourceOfFunds { get; set; }
+        [Required]
         public string SourceOfFundsInfo { get; set; }
 
+        [Required]
         public string Employer { get; set; }
+        [Required]
         public string Position { get; set; }
-
+        [Required]
         public byte FormOfBusiness { get; set; }
-
+        [Required]
         public string EmployerBusinessAddress { get; set; }
+        [Required]
         public string ContactNumber { get; set; }
+        [Required]
         public string NatureOfJob { get; set; }
+        [Required]
         public byte YearsInJob { get; set; }
 
         public bool IsOFW { get; set; }
 
+        public DateTime TimestampCreated { get; set; }
+
         public int ClientId { get; set; }
         public virtual Client Client { get; set; }
-
-        public DateTime DateTimeCreated { get; set; }
 
     }
 
