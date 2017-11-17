@@ -237,6 +237,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Client\ClientLoanController.cs" />
+    <Compile Include="Controllers\Client\ClientProfileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SmsController.cs" />
@@ -351,6 +352,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ClientProfile\" />
     <Folder Include="Views\Client\" />
     <Folder Include="Views\RoleManager\" />
   </ItemGroup>

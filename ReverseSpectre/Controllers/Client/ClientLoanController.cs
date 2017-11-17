@@ -12,29 +12,21 @@ using System.Configuration;
 namespace ReverseSpectre.Controllers
 {
     [Authorize]
+    [RoutePrefix("client/loan")]
+    [Route("{action=index}")]
     public class ClientLoanController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [Route]
         public ActionResult Index()
         {
             var model = db.LoanApplication.Include("LoanType").Where(m => m.Client.User.UserName == User.Identity.Name);
 
-            //List<LoanApplication> model = new List<Models.LoanApplication>();
-            //foreach (var item in applications)
-            //{
-            //    model.Add(new Models.LoanApplication()
-            //    {
-            //        Amount = item.Amount,
-            //        Term = item.Term,
-            //        TimestampCreated = item.TimestampCreated,
-            //        LoanStatus = item.loanst
-            //    });
-            //}
-
             return View(model.ToList());
         }
 
+        [Route("applications/{id}")]
         public ActionResult LoanApplication(int? id)
         {
             // Validation
@@ -58,11 +50,13 @@ namespace ReverseSpectre.Controllers
             return View(application);
         }
 
+        [Route("application")]
         public ActionResult CreateLoanApplication()
         {
             return View();
         }
 
+        [Route("application")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateLoanApplication(LoanApplicationViewModel model)
@@ -107,6 +101,7 @@ namespace ReverseSpectre.Controllers
             return View();
         }
 
+        [Route("application/document/{id}")]
         public ActionResult UploadLoanApplicationDocument(int? id)
         {
             // Validation
@@ -127,6 +122,7 @@ namespace ReverseSpectre.Controllers
             return View(new LoanApplicationDocumentFileViewModel() { Name = document.Name, LoanApplicationDocumentId = document.LoanApplicationDocumentId });
         }
 
+        [Route("application/document/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UploadLoanApplicationDocument(LoanApplicationDocumentFileViewModel model)
