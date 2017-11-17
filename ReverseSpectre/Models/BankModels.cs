@@ -74,6 +74,24 @@ namespace ReverseSpectre.Models
 
     public class EmploymentInformation
     {
+        public EmploymentInformation() { }
+        public EmploymentInformation(EmploymentInformationViewModel employment, Client client)
+        {
+            SourceOfFunds = employment.SourceOfFunds;
+            SourceOfFundsInfo = employment.SourceOfFundsInfo;
+            Employer = employment.Employer;
+            Position = employment.Position;
+            FormOfBusiness = employment.FormOfBusiness;
+            EmployerBusinessAddress = employment.EmployerBusinessAddress;
+            ContactNumber = employment.ContactNumber;
+            NatureOfJob = employment.NatureOfJob;
+            YearsInJob = employment.YearsInJob;
+            IsOFW = employment.IsOFW;
+
+            TimestampCreated = DateTime.Now;
+            Client = client;
+        }
+
         public int EmploymentInformationId { get; set; }
 
         [Required]
@@ -102,7 +120,6 @@ namespace ReverseSpectre.Models
 
         public int ClientId { get; set; }
         public virtual Client Client { get; set; }
-
     }
 
     public enum CivilStatusType

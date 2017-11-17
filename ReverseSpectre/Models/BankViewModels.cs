@@ -42,5 +42,47 @@ namespace ReverseSpectre.Models
         public DateTime Birthdate { get; set; }
         [Required]
         public string Nationality { get; set; }
+        [Required]
+        public CivilStatusType CivilStatus { get; set; }
+    }
+
+    public class EmploymentInformationViewModel
+    {
+        public EmploymentInformationViewModel() { }
+        public EmploymentInformationViewModel(EmploymentInformation employment)
+        {
+            SourceOfFunds = employment.SourceOfFunds;
+            SourceOfFundsInfo = employment.SourceOfFundsInfo;
+            Employer = employment.Employer;
+            Position = employment.Position;
+            FormOfBusiness = employment.FormOfBusiness;
+            EmployerBusinessAddress = employment.EmployerBusinessAddress;
+            ContactNumber = employment.ContactNumber;
+            NatureOfJob = employment.NatureOfJob;
+            YearsInJob = employment.YearsInJob;
+            IsOFW = employment.IsOFW;
+        }
+
+        [Required]
+        public SourceOfFundsType SourceOfFunds { get; set; }
+        [Required]
+        public string SourceOfFundsInfo { get; set; }
+
+        [Required]
+        public string Employer { get; set; }
+        [Required]
+        public string Position { get; set; }
+        [Required]
+        public byte FormOfBusiness { get; set; }
+        [Required]
+        public string EmployerBusinessAddress { get; set; }
+        [Required]
+        public string ContactNumber { get; set; }
+        [Required]
+        public string NatureOfJob { get; set; }
+        [Required]
+        public byte YearsInJob { get; set; }
+
+        public bool IsOFW { get; set; }
     }
 }

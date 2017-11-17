@@ -353,6 +353,7 @@
     <Content Include="Views\ClientLoan\Index.cshtml" />
     <Content Include="Views\ClientLoan\LoanApplication.cshtml" />
     <Content Include="Views\ClientLoan\UploadLoanApplicationDocument.cshtml" />
+    <Content Include="Views\ClientLoan\Redirect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

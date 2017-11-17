@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ReverseSpectre.Models;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace ReverseSpectre.Controllers
 {
@@ -22,7 +23,7 @@ namespace ReverseSpectre.Controllers
 
         public ActionResult Edit()
         {
-            // Validation
+            // Get client
             Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
             if (client == null)
             {
@@ -31,5 +32,49 @@ namespace ReverseSpectre.Controllers
 
             return View(client);
         }
+
+        public ActionResult EditEmployementInfo()
+        {
+            // Get client
+            Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+            if (client == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            // Convert latest entry to Viewmodel
+            EmploymentInformationViewModel model;
+            var employementInfo = client.EmploymentInformation.LastOrDefault();
+            if (employementInfo == null)
+                model = new EmploymentInformationViewModel();
+            else
+                model = new EmploymentInformationViewModel(employementInfo);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditEmployementInfo(EmploymentInformationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Get client
+                Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+                if (client == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
+
+                // Add entry
+                db.EmploymentInformations.Add(new EmploymentInformation(model, client));
+
+                // Save entry
+                await db.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
     }
 }
