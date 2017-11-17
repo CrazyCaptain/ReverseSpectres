@@ -14,18 +14,18 @@
         }({
             instrumentationKey:"5c8824c6-284c-414b-b925-24731776d993"
         });
-        
+
         window.appInsights=appInsights;
         appInsights.trackPageView();
     </script>
 </head>
 <body>
-    
+
     <div class="body-content">
         @Html.Partial("_Navbar")
-        <div class="container">
-            @RenderBody()
-        </div>
+        
+        @RenderBody()
+        
     </div>
 
     <footer class="footer">

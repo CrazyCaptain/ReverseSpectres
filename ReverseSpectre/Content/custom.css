@@ -1,11 +1,23 @@
-﻿
+﻿.form-input {
+    border:none;
+    border-bottom:1px solid #999;
+    padding:4px;
+    outline:none;
+    max-width:100%;
+}
 
 
 /* Override */
 /* navbar */
+.navbar {
+    margin-bottom:30px !important;
+}
+.navbar + * {
+    /*padding-top:20px;*/
+}
 .navbar-default {
     background-color: #fff;
-    border-color: #E7E7E7;
+    border-color: #e7e7e7;
 }
 /* Title */
 .navbar-default .navbar-brand {
