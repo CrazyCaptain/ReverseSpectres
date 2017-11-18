@@ -6,6 +6,15 @@
 <h3>Incomplete Profile</h3>
 
 <p>You must complete your profile before you can apply for a loan.</p>
-@Html.ActionLink("Go back...", "Index","ClientProfile")
 
-
+@if (ViewBag.redirect_link != null)
+{
+    if (ViewBag.redirect_link == "clientinfo")
+    {
+        @Html.ActionLink("Go back...", "Edit", "ClientProfile")
+    }
+    else
+    {
+        @Html.ActionLink("Go back...", "EditEmploymentInfo", "ClientProfile")
+    }
+}

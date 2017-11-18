@@ -269,6 +269,10 @@
     <Compile Include="Migrations\201711170709484_minor_changes_in_EmployerInfo.Designer.cs">
       <DependentUpon>201711170709484_minor_changes_in_EmployerInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711180553352_byte2enum_formOfBusiness.cs" />
+    <Compile Include="Migrations\201711180553352_byte2enum_formOfBusiness.Designer.cs">
+      <DependentUpon>201711180553352_byte2enum_formOfBusiness.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankModels.cs" />
@@ -294,11 +298,6 @@
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="AppSettingsSecrets.config" />
-    <Content Include="ConnectionStrings.config" />
     <Content Include="fonts\Raleway-Regular.ttf" />
     <Content Include="fonts\Raleway-SemiBold.ttf" />
     <None Include="Properties\PublishProfiles\reversehack - FTP.pubxml" />
@@ -359,10 +358,12 @@
     <Content Include="Views\ClientLoan\UploadLoanApplicationDocument.cshtml" />
     <Content Include="Views\ClientLoan\Redirect.cshtml" />
     <Content Include="Views\Shared\_Layout_Unpadded.cshtml" />
+    <Content Include="Views\ClientProfile\Edit.cshtml" />
+    <Content Include="Views\ClientProfile\EditEmploymentInfo.cshtml" />
+    <Content Include="Views\ClientProfile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ClientProfile\" />
     <Folder Include="Views\Client\" />
     <Folder Include="Views\RoleManager\" />
   </ItemGroup>
@@ -395,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711170709484_minor_changes_in_EmployerInfo.resx">
       <DependentUpon>201711170709484_minor_changes_in_EmployerInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711180553352_byte2enum_formOfBusiness.resx">
+      <DependentUpon>201711180553352_byte2enum_formOfBusiness.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
