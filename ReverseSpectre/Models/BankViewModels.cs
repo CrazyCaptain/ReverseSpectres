@@ -47,6 +47,61 @@ namespace ReverseSpectre.Models
         public string MobileNumber { get; set; }
     }
 
+    public class ClientViewModel
+    {
+        public ClientViewModel() { }
+        public ClientViewModel(Client client)
+        {
+            FirstName = client.FirstName;
+            MiddleName = client.MiddleName;
+            LastName = client.LastName;
+            Birthdate = client.Birthdate;
+            Nationality = client.Nationality;
+            MobileNumber = client.MobileNumber;
+            CivilStatus = client.CivilStatus;
+            TIN = client.TIN;
+            SSS = client.SSS;
+            CurrentAddress = client.CurrentAddress;
+            PermanentAddress = client.PermanentAddress;
+            MobileNumber = client.MobileNumber;
+        }
+
+        public int ClientId { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string MiddleName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {MiddleName} {LastName}";
+            }
+        }
+
+        public DateTime Birthdate { get; set; }
+        public string Nationality { get; set; }
+        public CivilStatusType CivilStatus { get; set; }
+
+        public string TIN { get; set; }
+        public string SSS { get; set; }
+        public string CurrentAddress { get; set; }
+        public string PermanentAddress { get; set; }
+        public string MobileNumber { get; set; }
+        public string SmsAccessToken { get; set; }
+        //[Required]
+        //[DataType(DataType.EmailAddress, ErrorMessage = "Must be a vaild email.")]
+        //public string Email { get; set; }
+
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+
+        public virtual List<EmploymentInformation> EmploymentInformation { get; set; }
+    }
+
     public class EmploymentInformationViewModel
     {
         public EmploymentInformationViewModel() { }

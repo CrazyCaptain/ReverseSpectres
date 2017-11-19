@@ -52,26 +52,26 @@ namespace ReverseSpectre.Controllers
         [Route("application")]
         public ActionResult CreateLoanApplication()
         {
-            // Get client
-            Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
-            if (client == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
+            //// Get client
+            //Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+            //if (client == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            //}
 
-            // Check if necessary client details exist
-            if (client.TIN == null ||
-                client.SSS == null ||
-                client.CurrentAddress == null ||
-                client.PermanentAddress == null ||
-                client.MobileNumber == null)
-            {
-                return RedirectToAction("Redirect");
-            }
-            if (client.EmploymentInformation.LastOrDefault() == null)
-            {
-                return RedirectToAction("Redirect");
-            }
+            //// Check if necessary client details exist
+            //if (client.TIN == null ||
+            //    client.SSS == null ||
+            //    client.CurrentAddress == null ||
+            //    client.PermanentAddress == null ||
+            //    client.MobileNumber == null)
+            //{
+            //    return RedirectToAction("Redirect");
+            //}
+            //if (client.EmploymentInformation.LastOrDefault() == null)
+            //{
+            //    return RedirectToAction("Redirect");
+            //}
 
             return View();
         }
@@ -81,11 +81,29 @@ namespace ReverseSpectre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateLoanApplication(LoanApplicationViewModel model)
         {
+            // Get client
+            Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+            if (client == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            //// Check if necessary client details exist
+            //if (client.TIN == null ||
+            //    client.SSS == null ||
+            //    client.CurrentAddress == null ||
+            //    client.PermanentAddress == null ||
+            //    client.MobileNumber == null)
+            //{
+            //    return RedirectToAction("Redirect");
+            //}
+            //if (client.EmploymentInformation.LastOrDefault() == null)
+            //{
+            //    return RedirectToAction("Redirect");
+            //}
+
             if (ModelState.IsValid)
             {
-                // Get client
-                Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
-
                 // Get loan (temporary)
                 var loanType = db.LoanTypes.First();
 

@@ -30,6 +30,20 @@ namespace ReverseSpectre.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
+            return View(new ClientViewModel(client));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ClientViewModel model)
+        {
+            // Get client
+            Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+            if (client == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             return View(client);
         }
 
