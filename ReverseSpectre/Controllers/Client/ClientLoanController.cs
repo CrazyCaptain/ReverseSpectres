@@ -66,7 +66,7 @@ namespace ReverseSpectre.Controllers
                 client.PermanentAddress == null ||
                 client.MobileNumber == null)
             {
-                return RedirectToAction("Redirect", new { r="clientinfo" });
+                return RedirectToAction("Redirect", new { r = "clientinfo" });
             }
             if (client.EmploymentInformation.LastOrDefault() == null)
             {
@@ -188,10 +188,11 @@ namespace ReverseSpectre.Controllers
             return View();
         }
 
-        public ActionResult Redirect(string r)
+        [Route("redirect")]
+        public ActionResult RedirectClient(string r)
         {
             ViewBag.redirect_link = r;
-            return View();
+            return View("Redirect");
         }
 
     }

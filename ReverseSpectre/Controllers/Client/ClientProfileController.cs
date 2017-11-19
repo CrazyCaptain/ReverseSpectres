@@ -39,6 +39,34 @@ namespace ReverseSpectre.Controllers
             return View(client);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(Client model)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                // Get client
+                Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+                
+                // Edit client
+                client.CivilStatus = model.CivilStatus;
+                client.MobileNumber = model.MobileNumber;
+                client.CurrentAddress = model.CurrentAddress;
+                client.PermanentAddress = model.PermanentAddress;
+                client.SSS = model.SSS;
+                client.TIN = model.TIN;
+
+                db.Entry(client).State = System.Data.Entity.EntityState.Modified;
+
+                //Save changes
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
         public ActionResult EditEmploymentInfo()
         {
             // Get client

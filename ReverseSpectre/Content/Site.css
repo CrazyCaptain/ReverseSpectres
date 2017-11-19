@@ -1,5 +1,10 @@
-﻿html, body, .body-content {
-    height:100%;
+﻿html{
+  position: relative; /* Allows the footer to notice content height */
+  min-height: 100%; /* My page will allways take the full screen */
+}
+
+body {
+    /*height:100%;*/
     min-height:100%;
 }
 
@@ -18,11 +23,14 @@ body {
 */
 
 .footer {
-    /*background:#adadad;*/
     background:rgba(249, 153, 51, 0.9);
     padding:0px 20px;
     color:#fff;
     border-top:1px solid #e7e7e7;
+    position:absolute;
+    bottom:0px;
+    width:100%;
+    margin-bottom:-61px;
 }
 .footer-content {
     background:rgba(247, 127, 0, 0.65);

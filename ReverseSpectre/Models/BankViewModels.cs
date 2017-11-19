@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -97,12 +98,6 @@ namespace ReverseSpectre.Models
         //[Required]
         //[DataType(DataType.EmailAddress, ErrorMessage = "Must be a vaild email.")]
         //public string Email { get; set; }
-
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
-
-        public virtual List<EmploymentInformation> EmploymentInformation { get; set; }
     }
 
     public class EmploymentInformationViewModel
