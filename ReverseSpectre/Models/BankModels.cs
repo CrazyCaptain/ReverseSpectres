@@ -62,9 +62,10 @@ namespace ReverseSpectre.Models
         public string PermanentAddress { get; set; }
         public string MobileNumber { get; set; }
         public string SmsAccessToken { get; set; }
-        //[Required]
-        //[DataType(DataType.EmailAddress, ErrorMessage = "Must be a vaild email.")]
-        //public string Email { get; set; }
+
+        /*[Required]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Must be a vaild email.")]
+        public string Email { get; set; }*/
 
         public string UserId { get; set; }
         [ForeignKey("UserId")]
@@ -97,7 +98,6 @@ namespace ReverseSpectre.Models
 
         [Required]
         public SourceOfFundsType SourceOfFunds { get; set; }
-        [Required]
         public string SourceOfFundsInfo { get; set; }
 
         [Required]
@@ -105,7 +105,7 @@ namespace ReverseSpectre.Models
         [Required]
         public string Position { get; set; }
         [Required]
-        public byte FormOfBusiness { get; set; }
+        public FormOfBusinessType FormOfBusiness { get; set; }
         [Required]
         public string EmployerBusinessAddress { get; set; }
         [Required]
@@ -155,6 +155,5 @@ namespace ReverseSpectre.Models
         [Display(Name = "Corporation")]
         Corporation = 2
     }
-
     
 }

@@ -17,6 +17,7 @@ namespace ReverseSpectre.Api
         private ApplicationDbContext db = new ApplicationDbContext();
         private string short_code = ConfigurationManager.AppSettings["SmsShortCode"];
 
+        [HttpGet]
         public IHttpActionResult Redirect(string access_token, string subscriber_number)
         {
             Trace.TraceInformation("Token: " + access_token + " Number: " + subscriber_number);
@@ -58,10 +59,9 @@ namespace ReverseSpectre.Api
                 customerMessage = sms.InboundSmsMessageList.First().Message;
                 customerNumber = sms.InboundSmsMessageList[0].BaseSenderAddress;
             }
-                
 
             // convert globe api format tel:+639 to 09
-            string mobileNumber = $"0{customerNumber}";
+            string mobileNumber = $"0{customerNumber.Substring(7)}";
 
             // log message
             Trace.TraceInformation($"{customerMessage} from {mobileNumber}");
@@ -79,7 +79,36 @@ namespace ReverseSpectre.Api
             // log 1st word of message
             Trace.TraceInformation(msg[0]);
 
+            if (msg[0] == "hello" || msg[0] == "hi" || msg[0] == "test")
+            {
+                if (client.SmsAccessToken != null)
+                {
+                    try
+                    {
+                        sendSMS($"Hello {client.FirstName}.", client.SmsAccessToken, customerNumber.Substring(4));
+                    }
+                    catch(Exception ex)
+                    {
+                        Trace.TraceInformation($"Error: {ex.Message}");
+                    }
+                }
+            }
+
             return null;
+        }
+
+        private void sendSMS(string msg, string access_token, string subscriber_number)
+        {
+            if (access_token != null && msg != null)
+            {
+                Sms sms = new Sms(short_code, access_token);
+
+                dynamic response = sms
+                    .SetReceiverAddress("+63" + subscriber_number)
+                    .SetMessage(msg)
+                    .SendMessage()
+                    .GetDynamicResponse();
+            }
         }
     }
 }

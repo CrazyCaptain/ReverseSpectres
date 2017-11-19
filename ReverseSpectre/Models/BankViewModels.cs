@@ -44,6 +44,9 @@ namespace ReverseSpectre.Models
         public string Nationality { get; set; }
         [Required]
         public CivilStatusType CivilStatus { get; set; }
+
+        [StringLength(11, ErrorMessage = "The {0} must be {2} characters long; 09xx xxx xxxx.", MinimumLength = 11)]
+        [Display(Name ="Mobile Number")]
         public string MobileNumber { get; set; }
     }
 
@@ -129,7 +132,7 @@ namespace ReverseSpectre.Models
         [Required]
         public string Position { get; set; }
         [Required]
-        public byte FormOfBusiness { get; set; }
+        public FormOfBusinessType FormOfBusiness { get; set; }
         [Required]
         public string EmployerBusinessAddress { get; set; }
         [Required]

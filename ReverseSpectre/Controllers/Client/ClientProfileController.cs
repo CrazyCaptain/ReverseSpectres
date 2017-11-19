@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using ReverseSpectre.Models;
 using System.Net;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace ReverseSpectre.Controllers
 {
@@ -18,27 +20,17 @@ namespace ReverseSpectre.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            // Get client
+            Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+
+            return View(client);
         }
 
         public ActionResult Edit()
         {
             // Get client
             Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
-            if (client == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
-
-            return View(new ClientViewModel(client));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(ClientViewModel model)
-        {
-            // Get client
-            Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+            
             if (client == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
@@ -47,7 +39,7 @@ namespace ReverseSpectre.Controllers
             return View(client);
         }
 
-        public ActionResult EditEmployementInfo()
+        public ActionResult EditEmploymentInfo()
         {
             // Get client
             Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
@@ -58,17 +50,17 @@ namespace ReverseSpectre.Controllers
 
             // Convert latest entry to Viewmodel
             EmploymentInformationViewModel model;
-            var employementInfo = client.EmploymentInformation.LastOrDefault();
-            if (employementInfo == null)
+            var employmentInfo = client.EmploymentInformation.LastOrDefault();
+            if (employmentInfo == null)
                 model = new EmploymentInformationViewModel();
             else
-                model = new EmploymentInformationViewModel(employementInfo);
+                model = new EmploymentInformationViewModel(employmentInfo);
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditEmployementInfo(EmploymentInformationViewModel model)
+        public async Task<ActionResult> EditEmploymentInfo(EmploymentInformationViewModel model)
         {
             if (ModelState.IsValid)
             {

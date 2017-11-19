@@ -269,6 +269,10 @@
     <Compile Include="Migrations\201711170709484_minor_changes_in_EmployerInfo.Designer.cs">
       <DependentUpon>201711170709484_minor_changes_in_EmployerInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711180553352_byte2enum_formOfBusiness.cs" />
+    <Compile Include="Migrations\201711180553352_byte2enum_formOfBusiness.Designer.cs">
+      <DependentUpon>201711180553352_byte2enum_formOfBusiness.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankModels.cs" />
@@ -397,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711170709484_minor_changes_in_EmployerInfo.resx">
       <DependentUpon>201711170709484_minor_changes_in_EmployerInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711180553352_byte2enum_formOfBusiness.resx">
+      <DependentUpon>201711180553352_byte2enum_formOfBusiness.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

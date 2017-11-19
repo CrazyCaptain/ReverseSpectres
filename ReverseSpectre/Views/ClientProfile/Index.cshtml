@@ -1,11 +1,172 @@
-﻿
+﻿@model ReverseSpectre.Models.Client
+
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Index";
 }
 
-<h3>Profile</h3>
+<h2>Index</h2>
 
-<div>
+<div class="row">
+    <div class="col-md-6">
+        <h4>Client Information @Html.ActionLink("Edit Client Info", "Edit", null, new { @class = "pull-right" })</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Name
+            </dt>
+            <dd>
+                @Model.FullName
+            </dd>
 
+            <dt>
+                @Html.DisplayNameFor(model => model.MobileNumber)
+            </dt>
+            <dd>
+                @Model.MobileNumber
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TIN)
+            </dt>
+            <dd>
+                @Model.TIN
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SSS)
+            </dt>
+            <dd>
+                @Model.SSS
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </dt>
+            <dd>
+                @Model.Birthdate
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nationality)
+            </dt>
+            <dd>
+                @Model.Nationality
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CivilStatus)
+            </dt>
+            <dd>
+                @Model.CivilStatus
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentAddress)
+            </dt>
+            <dd>
+                @Model.CurrentAddress
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PermanentAddress)
+            </dt>
+            <dd>
+                @Model.PermanentAddress
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <h4>EmploymentInformation @Html.ActionLink("Edit Employment Info", "EditEmploymentInfo", null, new { @class="pull-right"})</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().SourceOfFunds)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().SourceOfFunds)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().SourceOfFundsInfo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().SourceOfFundsInfo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().Employer)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().Employer)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().Position)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().Position)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().FormOfBusiness)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().FormOfBusiness)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().EmployerBusinessAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().EmployerBusinessAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().ContactNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().ContactNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().NatureOfJob)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().NatureOfJob)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().YearsInJob)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().YearsInJob)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().IsOFW)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().IsOFW)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentInformation.LastOrDefault().TimestampCreated)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentInformation.LastOrDefault().TimestampCreated)
+            </dd>
+        </dl>
+    </div>
 </div>
-
