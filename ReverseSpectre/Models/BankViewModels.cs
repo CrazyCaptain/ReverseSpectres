@@ -71,11 +71,8 @@ namespace ReverseSpectre.Models
         }
 
         public int ClientId { get; set; }
-        [Required]
         public string FirstName { get; set; }
-        [Required]
         public string MiddleName { get; set; }
-        [Required]
         public string LastName { get; set; }
         public string FullName
         {
@@ -95,9 +92,8 @@ namespace ReverseSpectre.Models
         public string PermanentAddress { get; set; }
         public string MobileNumber { get; set; }
         public string SmsAccessToken { get; set; }
-        //[Required]
-        //[DataType(DataType.EmailAddress, ErrorMessage = "Must be a vaild email.")]
-        //public string Email { get; set; }
+        
+        public EmploymentInformation EmploymentInformation { get; set; }
     }
 
     public class EmploymentInformationViewModel
@@ -118,25 +114,35 @@ namespace ReverseSpectre.Models
         }
 
         [Required]
+        [DisplayName("Source of Funds")]
         public SourceOfFundsType SourceOfFunds { get; set; }
         [Required]
+        [DisplayName("Source of Funds Info")]
         public string SourceOfFundsInfo { get; set; }
 
         [Required]
+        [DisplayName("Employer")]
         public string Employer { get; set; }
         [Required]
+        [DisplayName("Position")]
         public string Position { get; set; }
         [Required]
+        [DisplayName("Nature of Business")]
         public FormOfBusinessType FormOfBusiness { get; set; }
         [Required]
+        [DisplayName("Employer Address")]
         public string EmployerBusinessAddress { get; set; }
         [Required]
+        [DisplayName("Contact Number")]
         public string ContactNumber { get; set; }
         [Required]
+        [DisplayName("Nature of Job")]
         public string NatureOfJob { get; set; }
         [Required]
+        [DisplayName("Years in Job")]
         public byte YearsInJob { get; set; }
 
+        [DisplayName("Is an OFW")]
         public bool IsOFW { get; set; }
     }
 }

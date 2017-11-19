@@ -23,7 +23,11 @@ namespace ReverseSpectre.Controllers
             // Get client
             Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
 
-            return View(client);
+            // Generate model
+            var model = new ClientViewModel(client);
+            model.EmploymentInformation = client.EmploymentInformation.LastOrDefault() ?? new EmploymentInformation();
+
+            return View(model);
         }
 
         public ActionResult Edit()
@@ -36,12 +40,12 @@ namespace ReverseSpectre.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
-            return View(client);
+            return View(new ClientViewModel(client));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Client model)
+        public async Task<ActionResult> Edit(ClientViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +71,7 @@ namespace ReverseSpectre.Controllers
             return View(model);
         }
 
+        [Route("employment/edit")]
         public ActionResult EditEmploymentInfo()
         {
             // Get client
@@ -87,11 +92,17 @@ namespace ReverseSpectre.Controllers
             return View(model);
         }
 
+        [Route("employment/edit")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditEmploymentInfo(EmploymentInformationViewModel model)
         {
             if (ModelState.IsValid)
             {
+                // Check if SourceOfFunds is "Others"
+                if (model.SourceOfFunds != SourceOfFundsType.Others)
+                    model.SourceOfFundsInfo = string.Empty;
+
                 // Get client
                 Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
                 if (client == null)
@@ -107,7 +118,7 @@ namespace ReverseSpectre.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(model);
         }
 
     }

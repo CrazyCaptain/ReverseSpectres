@@ -19,7 +19,7 @@
         appInsights.trackPageView();
     </script>
 </head>
-<body>
+<body style="background: #f6f6f6;">
 
     <div class="body-content">
         @Html.Partial("_Navbar")
@@ -28,14 +28,7 @@
         
     </div>
 
-    <footer class="footer">
-        <div class="container footer-content">
-            <center>
-                @*<span>Powered by - Spectres.Solutions Inc.</span>*@
-                <span>Union Bank of the Philippines</span>
-            </center>
-        </div>
-    </footer>
+    @Html.Partial("_Footer")
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

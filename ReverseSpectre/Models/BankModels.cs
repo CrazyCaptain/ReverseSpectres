@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -40,10 +41,13 @@ namespace ReverseSpectre.Models
 
         public int ClientId { get; set; }
         [Required]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
         [Required]
+        [DisplayName("Middle Name")]
         public string MiddleName { get; set; }
         [Required]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
         public string FullName {
             get
@@ -54,12 +58,17 @@ namespace ReverseSpectre.Models
 
         public DateTime Birthdate { get; set; }
         public string Nationality { get; set; }
+        [DisplayName("Civil Status")]
         public CivilStatusType CivilStatus { get; set; }
 
         public string TIN { get; set; }
+        [DisplayName("SSS / GSIS")]
         public string SSS { get; set; }
+        [DisplayName("Current Address")]
         public string CurrentAddress { get; set; }
+        [DisplayName("Permanent Address")]
         public string PermanentAddress { get; set; }
+        [DisplayName("Mobile Number")]
         public string MobileNumber { get; set; }
         public string SmsAccessToken { get; set; }
 
@@ -125,11 +134,11 @@ namespace ReverseSpectre.Models
 
     public enum CivilStatusType
     {
-        Single = 1,
-        Married = 2,
-        Widowed =3,
-        Seperated = 4,
-        Others = 5
+        Single = 0,
+        Married = 1,
+        Widowed = 2,
+        Seperated = 3,
+        Others = 4
     }
 
     public enum SourceOfFundsType

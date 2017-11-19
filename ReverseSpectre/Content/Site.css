@@ -12,6 +12,27 @@ body {
     font-family:Raleway, Helvetica, sans-serif
 }
 
+.section-container {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    max-width: 800px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    margin-bottom:40px;
+}
+.section-header {
+    padding:0px 40px 10px;
+    border-bottom:1px solid #e7e7e7;
+}
+.section-header-edit {
+    margin-left:10px;
+    font-size:0.75em !important;
+}
+.section-content {
+    padding:20px 40px;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     /*padding-left: 15px;
