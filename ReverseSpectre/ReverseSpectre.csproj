@@ -307,6 +307,8 @@
     <Content Include="fonts\Raleway-SemiBold.ttf" />
     <None Include="Properties\PublishProfiles\reversehack - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\reversehack - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\reversehackdemo - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\reversehackdemo - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

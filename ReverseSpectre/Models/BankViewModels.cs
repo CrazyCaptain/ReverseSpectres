@@ -116,7 +116,6 @@ namespace ReverseSpectre.Models
         [Required]
         [DisplayName("Source of Funds")]
         public SourceOfFundsType SourceOfFunds { get; set; }
-        [Required]
         [DisplayName("Source of Funds Info")]
         public string SourceOfFundsInfo { get; set; }
 

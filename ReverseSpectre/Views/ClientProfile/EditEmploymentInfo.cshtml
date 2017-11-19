@@ -94,7 +94,16 @@
 
                     <div class="col-md-6">
                         @Html.LabelFor(model => model.IsOFW, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.IsOFW, new { htmlAttributes = new { @class = "form-input" } })
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.RadioButton("IsOFW", false, true, new { @id = "IsOFWFalse" })
+                                <label for="IsOFWFalse">No</label>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.RadioButton("IsOFW", false, false, new { @id = "IsOFWTrue" })
+                                <label for="IsOFWTrue">Yes</label>
+                            </div>
+                        </div>
                         @Html.ValidationMessageFor(model => model.IsOFW, "", new { @class = "text-danger" })
                     </div>
                 </div>

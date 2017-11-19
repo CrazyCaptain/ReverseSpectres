@@ -106,24 +106,34 @@ namespace ReverseSpectre.Models
         public int EmploymentInformationId { get; set; }
 
         [Required]
+        [DisplayName("Source of Funds")]
         public SourceOfFundsType SourceOfFunds { get; set; }
+        [DisplayName("Source of Funds Info")]
         public string SourceOfFundsInfo { get; set; }
 
         [Required]
+        [DisplayName("Employer")]
         public string Employer { get; set; }
         [Required]
+        [DisplayName("Position")]
         public string Position { get; set; }
         [Required]
+        [DisplayName("Nature of Business")]
         public FormOfBusinessType FormOfBusiness { get; set; }
         [Required]
+        [DisplayName("Employer Address")]
         public string EmployerBusinessAddress { get; set; }
         [Required]
+        [DisplayName("Contact Number")]
         public string ContactNumber { get; set; }
         [Required]
+        [DisplayName("Nature of Job")]
         public string NatureOfJob { get; set; }
         [Required]
+        [DisplayName("Years in Job")]
         public byte YearsInJob { get; set; }
 
+        [DisplayName("Is an OFW")]
         public bool IsOFW { get; set; }
 
         public DateTime TimestampCreated { get; set; }
@@ -138,7 +148,7 @@ namespace ReverseSpectre.Models
         Married = 1,
         Widowed = 2,
         Seperated = 3,
-        Others = 4
+        Other = 4
     }
 
     public enum SourceOfFundsType

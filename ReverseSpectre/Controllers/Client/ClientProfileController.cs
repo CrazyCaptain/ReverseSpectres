@@ -97,12 +97,19 @@ namespace ReverseSpectre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditEmploymentInfo(EmploymentInformationViewModel model)
         {
+            // Check if SourceOfFunds is "Others"
+            if (model.SourceOfFunds != SourceOfFundsType.Others)
+                model.SourceOfFundsInfo = string.Empty;
+            else
+            {
+                if (string.IsNullOrEmpty(model.SourceOfFundsInfo))
+                {
+                    ModelState.AddModelError("SourceOfFundsInfo", "Please fill up the required field.");
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                // Check if SourceOfFunds is "Others"
-                if (model.SourceOfFunds != SourceOfFundsType.Others)
-                    model.SourceOfFundsInfo = string.Empty;
-
                 // Get client
                 Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
                 if (client == null)
