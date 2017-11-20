@@ -105,7 +105,7 @@
                 <div class="row form-group">
                     <div class="col-md-6">
                         @Html.LabelFor(model => model.Partner.Nationality, htmlAttributes: new { @class = "control-label" })
-                        <select class="form-input" name="Nationality" id="Nationality">
+                        <select class="form-input" name="Partner.Nationality" id="Nationality">
                             <option value="Philippines">Philippines</option>
                         </select>
                         @Html.ValidationMessageFor(model => model.Partner.Nationality, "", new { @class = "text-danger" })
