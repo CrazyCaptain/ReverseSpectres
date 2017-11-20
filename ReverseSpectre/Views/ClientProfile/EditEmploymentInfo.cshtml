@@ -53,7 +53,7 @@
 
                     <div class="col-md-6">
                         @Html.LabelFor(model => model.FormOfBusiness, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.FormOfBusiness, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.EnumDropDownListFor(model => model.FormOfBusiness, new { @class = "form-input" })
                         @Html.ValidationMessageFor(model => model.FormOfBusiness, "", new { @class = "text-danger" })
                     </div>
                 </div>
