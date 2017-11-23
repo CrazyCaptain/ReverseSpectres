@@ -33,10 +33,67 @@ namespace ReverseSpectre.Migrations
                 roleManager.Create(role);
             }
 
-            //// Accounts
-            //var userStore = new UserStore<ApplicationUser>(context);
-            //var userManager = new UserManager<ApplicationUser>(userStore);
-            
+            if (!context.Roles.Any(r => r.Name == "SalesDirector"))
+            {
+                var role = new IdentityRole { Name = "SalesDirector" };
+                roleManager.Create(role);
+            }
+
+            // Bank
+            if (!context.Banks.Any(b => b.BankId == 1))
+            {
+                context.Banks.AddOrUpdate(new Bank()
+                {
+                    BankId = 1,
+                    BranchName = "Taft",
+                });
+            }
+
+            // Accounts
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            // BusinessManager
+            if (!context.Users.Any(u => u.UserName == "reversehack_bm@mailinator.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "reversehack_bm@mailinator.com",
+                    Email = "reversehack_bm@mailinator.com",
+                    EmailConfirmed = true,
+                };
+                userManager.Create(user, "Testing@123");
+                userManager.AddToRole(user.Id, "Client");
+
+                context.BusinessManagers.AddOrUpdate(new BusinessManager()
+                {
+                    BusinessManagerId = 1,
+                    TimestampCreated = DateTime.Now,
+                    BankId = 1
+                });
+            }
+
+            // Relationship Manager
+            if (!context.Users.Any(u => u.UserName == "reversehack_rm@mailinator.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "reversehack_rm@mailinator.com",
+                    Email = "reversehack_rm@mailinator.com",
+                    EmailConfirmed = true,
+                };
+                userManager.Create(user, "Testing@123");
+                userManager.AddToRole(user.Id, "RelationshipManager");
+
+                context.RelationshipManagers.Add(new RelationshipManager()
+                {
+                    RelationshipManagerId = 1,
+                    IsDisabled = false,
+                    TimestampCreated = DateTime.Now,
+                    BusinessManagerId = 1
+                });
+            }
+
         }
     }
 }
