@@ -278,6 +278,14 @@
     <Compile Include="Migrations\201711230800167_revision_of_models.Designer.cs">
       <DependentUpon>201711230800167_revision_of_models.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711230826559_revision_of_managers.cs" />
+    <Compile Include="Migrations\201711230826559_revision_of_managers.Designer.cs">
+      <DependentUpon>201711230826559_revision_of_managers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711230837088_added_RM_FK_to_ClientInvitation.cs" />
+    <Compile Include="Migrations\201711230837088_added_RM_FK_to_ClientInvitation.Designer.cs">
+      <DependentUpon>201711230837088_added_RM_FK_to_ClientInvitation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankModels.cs" />
@@ -416,6 +424,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711230800167_revision_of_models.resx">
       <DependentUpon>201711230800167_revision_of_models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711230826559_revision_of_managers.resx">
+      <DependentUpon>201711230826559_revision_of_managers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711230837088_added_RM_FK_to_ClientInvitation.resx">
+      <DependentUpon>201711230837088_added_RM_FK_to_ClientInvitation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

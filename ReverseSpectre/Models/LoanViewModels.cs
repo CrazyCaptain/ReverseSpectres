@@ -7,6 +7,16 @@ using System.Web;
 
 namespace ReverseSpectre.Models
 {
+    public class ClientInvitationViewModel
+    {
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string BusinessName { get; set; }
+        [Required]
+        public FormOfBusinessType FormOfBusiness { get; set; }
+    }
+
     public class LoanApplicationViewModel
     {
         public double Amount { get; set; }

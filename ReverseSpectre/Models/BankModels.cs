@@ -123,12 +123,26 @@ namespace ReverseSpectre.Models
 
     public class ClientInvitation
     {
+        public ClientInvitation() { }
+        public ClientInvitation(ClientInvitationViewModel invitation, RelationshipManager rm)
+        {
+            Email = invitation.Email;
+            BusinessName = invitation.BusinessName;
+            FormOfBusiness = invitation.FormOfBusiness;
+            Token = Guid.NewGuid();
+            Timestamp = DateTime.Now;
+            RelationshipManager = rm;
+        }
+
         public int ClientInvitationId { get; set; }
         public string Email { get; set; }
         public string BusinessName { get; set; }
         public FormOfBusinessType FormOfBusiness { get; set; }
         public Guid Token { get; set; }
         public DateTime Timestamp { get; set; }
+
+        public int RelationshipManagerId { get; set; }
+        public virtual RelationshipManager RelationshipManager { get; set; }
     }
 
     public enum CivilStatusType
