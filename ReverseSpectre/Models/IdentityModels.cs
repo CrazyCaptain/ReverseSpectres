@@ -29,6 +29,10 @@ namespace ReverseSpectre.Models
 
         // Bank
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<BusinessManager> BusinessManagers { get; set; }
+        public DbSet<RelationshipManager> RelationshipManagers { get; set; }
+
+        // Client
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientInvitation> ClientInvitations { get; set; }
 
@@ -44,13 +48,6 @@ namespace ReverseSpectre.Models
         {
             return new ApplicationDbContext();
         }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-        //    modelBuilder.Entity<EmploymentInformation>().HasRequired(t => t.Client).WithRequiredPrincipal(t => t.EmploymentInformation);
-        //}
-
-        public System.Data.Entity.DbSet<ReverseSpectre.Models.RelationshipManager> RelationshipManagers { get; set; }
+        
     }
 }
