@@ -24,6 +24,10 @@ namespace ReverseSpectre.Models
         public int BankId { get; set; }
         public virtual Bank Bank { get; set; }
 
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+
         public List<RelationshipManager> RelationshipManagers { get; set; }
     }
 
@@ -35,6 +39,10 @@ namespace ReverseSpectre.Models
 
         public int BusinessManagerId { get; set; }
         public virtual BusinessManager BusinessManager { get; set; }
+
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
     }
 
     public class Client

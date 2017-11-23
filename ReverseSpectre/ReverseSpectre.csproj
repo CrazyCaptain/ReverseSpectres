@@ -241,6 +241,7 @@
     <Compile Include="Controllers\Client\ClientProfileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RelationshipManager\RelationshipManagerLoanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -377,6 +378,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Client\" />
+    <Folder Include="Views\RelationshipManagerLoans\" />
     <Folder Include="Views\RoleManager\" />
   </ItemGroup>
   <ItemGroup>

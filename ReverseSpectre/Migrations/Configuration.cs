@@ -69,7 +69,8 @@ namespace ReverseSpectre.Migrations
                 {
                     BusinessManagerId = 1,
                     TimestampCreated = DateTime.Now,
-                    BankId = 1
+                    BankId = 1,
+                    UserId = user.Id
                 });
             }
 
@@ -90,7 +91,8 @@ namespace ReverseSpectre.Migrations
                     RelationshipManagerId = 1,
                     IsDisabled = false,
                     TimestampCreated = DateTime.Now,
-                    BusinessManagerId = 1
+                    BusinessManagerId = 1,
+                    UserId = user.Id
                 });
             }
 
