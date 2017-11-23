@@ -16,13 +16,25 @@ namespace ReverseSpectre.Models
         public string BranchName { get; set; }
     }
 
+    public class BusinessManager
+    {
+        public int BusinessManagerId { get; set; }
+        public DateTime TimestampCreated { get; set; }
+
+        public int BankId { get; set; }
+        public virtual Bank Bank { get; set; }
+
+        public List<RelationshipManager> RelationshipManagers { get; set; }
+    }
+
     public class RelationshipManager
     {
         public int RelationshipManagerId { get; set; }
         public bool IsDisabled { get; set; }
+        public DateTime TimestampCreated { get; set; }
 
-        public int BankId { get; set; }
-        public virtual Bank Bank { get; set; }
+        public int BusinessManagerId { get; set; }
+        public virtual BusinessManager BusinessManager { get; set; }
     }
 
     public class Client
@@ -53,8 +65,8 @@ namespace ReverseSpectre.Models
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
-        //public int RelationshipManagerId { get; set; }
-        //public virtual RelationshipManager RelationshipManager { get; set; }
+        public int RelationshipManagerId { get; set; }
+        public virtual RelationshipManager RelationshipManager { get; set; }
 
         public virtual List<ContactInformation> ContactInformation { get; set; }
     }
