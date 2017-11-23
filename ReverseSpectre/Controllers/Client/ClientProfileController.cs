@@ -25,7 +25,7 @@ namespace ReverseSpectre.Controllers
 
             // Generate model
             var model = new ClientViewModel(client);
-            model.EmploymentInformation = client.EmploymentInformation.LastOrDefault() ?? new EmploymentInformation();
+            model.ContactInformation = client.ContactInformation.ToList() ?? new List<ContactInformation>();
 
             return View(model);
         }
@@ -52,14 +52,10 @@ namespace ReverseSpectre.Controllers
                 
                 // Get client
                 Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
-                
+
                 // Edit client
-                client.CivilStatus = model.CivilStatus;
-                client.MobileNumber = model.MobileNumber;
-                client.CurrentAddress = model.CurrentAddress;
-                client.PermanentAddress = model.PermanentAddress;
-                client.SSS = model.SSS;
-                client.TIN = model.TIN;
+                client.BusinessAddress = model.BusinessAddress;
+                client.TelephoneNumber = model.TelephoneNumber;
 
                 db.Entry(client).State = System.Data.Entity.EntityState.Modified;
 
@@ -70,63 +66,6 @@ namespace ReverseSpectre.Controllers
 
             return View(model);
         }
-
-        [Route("employment/edit")]
-        public ActionResult EditEmploymentInfo()
-        {
-            // Get client
-            Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
-            if (client == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
-
-            // Convert latest entry to Viewmodel
-            EmploymentInformationViewModel model;
-            var employmentInfo = client.EmploymentInformation.LastOrDefault();
-            if (employmentInfo == null)
-                model = new EmploymentInformationViewModel();
-            else
-                model = new EmploymentInformationViewModel(employmentInfo);
-
-            return View(model);
-        }
-
-        [Route("employment/edit")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditEmploymentInfo(EmploymentInformationViewModel model)
-        {
-            // Check if SourceOfFunds is "Others"
-            if (model.SourceOfFunds != SourceOfFundsType.Others)
-                model.SourceOfFundsInfo = string.Empty;
-            else
-            {
-                if (string.IsNullOrEmpty(model.SourceOfFundsInfo))
-                {
-                    ModelState.AddModelError("SourceOfFundsInfo", "Please fill up the required field.");
-                }
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get client
-                Client client = db.Clients.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
-                if (client == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-                }
-
-                // Add entry
-                db.EmploymentInformations.Add(new EmploymentInformation(model, client));
-
-                // Save entry
-                await db.SaveChangesAsync();
-
-                return RedirectToAction("Index");
-            }
-            return View(model);
-        }
-
+        
     }
 }

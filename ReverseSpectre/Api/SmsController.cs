@@ -23,7 +23,7 @@ namespace ReverseSpectre.Api
             Trace.TraceInformation("Token: " + access_token + " Number: " + subscriber_number);
             string subscriber_number_p = "0" + subscriber_number;
 
-            ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(c => c.MobileNumber == subscriber_number_p);
+            ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(c => c.ContactInformation.First().MobileNumber == subscriber_number_p);
 
             if (client != null)
             {
@@ -34,7 +34,7 @@ namespace ReverseSpectre.Api
 
                 dynamic response = sms
                     .SetReceiverAddress("+63" + subscriber_number)
-                    .SetMessage("Hello, " + client.FirstName + ". Your subscription to Spectres-UnionBank app has been verified. Send 'learn more' or 'saklolo' or 'help' for list of keywords.")
+                    .SetMessage("Hello, " + client.ContactInformation.First().FirstName + ". Your subscription to Spectres-UnionBank app has been verified. Send 'learn more' or 'saklolo' or 'help' for list of keywords.")
                     .SendMessage()
                     .GetDynamicResponse();
 
@@ -66,9 +66,9 @@ namespace ReverseSpectre.Api
             // log message
             Trace.TraceInformation($"{customerMessage} from {mobileNumber}");
 
-            ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(c => c.MobileNumber == mobileNumber);
+            ReverseSpectre.Models.Client client = db.Clients.FirstOrDefault(c => c.ContactInformation.First().MobileNumber == mobileNumber);
             // log client
-            Trace.TraceInformation("Name: " + client.FirstName);
+            Trace.TraceInformation("Name: " + client.ContactInformation.First().FirstName);
 
             // if match any keyword
             bool match = false;
@@ -85,7 +85,7 @@ namespace ReverseSpectre.Api
                 {
                     try
                     {
-                        sendSMS($"Hello {client.FirstName}.", client.SmsAccessToken, customerNumber.Substring(4));
+                        sendSMS($"Hello {client.ContactInformation.First().FirstName}.", client.SmsAccessToken, customerNumber.Substring(4));
                     }
                     catch(Exception ex)
                     {

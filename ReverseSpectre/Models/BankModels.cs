@@ -28,18 +28,56 @@ namespace ReverseSpectre.Models
     public class Client
     {
         public Client() { }
-        public Client(ClientRegistrationModel client, ApplicationUser user)
+        public Client(ClientRegistrationModel client, ApplicationUser user, ClientInvitation invitation)
         {
-            FirstName = client.FirstName;
-            MiddleName = client.MiddleName;
-            LastName = client.LastName;
-            Birthdate = client.Birthdate;
-            Nationality = client.Nationality;
+            BusinessName = invitation.BusinessName;
+            BusinessAddress = client.BusinessAddress;
+            FormOfBusiness = invitation.FormOfBusiness;
+            TelephoneNumber = client.TelephoneNumber;
+
             UserId = user.Id;
-            MobileNumber = client.MobileNumber;
         }
 
         public int ClientId { get; set; }
+        [DisplayName("Business Name")]
+        public string BusinessName { get; set; }
+        [DisplayName("Business Address")]
+        public string BusinessAddress { get; set; }
+        [DisplayName("Nature of Business")]
+        public FormOfBusinessType FormOfBusiness { get; set; }
+        [DisplayName("Telephone Number")]
+        public string TelephoneNumber { get; set; }
+        public string SmsAccessToken { get; set; }
+        
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+
+        //public int RelationshipManagerId { get; set; }
+        //public virtual RelationshipManager RelationshipManager { get; set; }
+
+        public virtual List<ContactInformation> ContactInformation { get; set; }
+    }
+
+    public class ContactInformation
+    {
+        public ContactInformation() { }
+        public ContactInformation(ContactInformationViewModel contact, Client client)
+        {
+            FirstName = contact.FirstName;
+            MiddleName = contact.MiddleName;
+            LastName = contact.LastName;
+            IsFemale = contact.IsFemale;
+            Position = contact.Position;
+            Email = contact.Email;
+            MobileNumber = contact.MobileNumber;
+
+            TimestampCreated = DateTime.Now;
+            Client = client;
+        }
+
+        public int ContactInformationId { get; set; }
+
         [Required]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -49,97 +87,28 @@ namespace ReverseSpectre.Models
         [Required]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
-        public string FullName {
-            get
-            {
-                return $"{FirstName} {MiddleName} {LastName}";
-            }
-        }
 
-        public DateTime Birthdate { get; set; }
-        public string Nationality { get; set; }
-        [DisplayName("Civil Status")]
-        public CivilStatusType CivilStatus { get; set; }
-
-        public string TIN { get; set; }
-        [DisplayName("SSS / GSIS")]
-        public string SSS { get; set; }
-        [DisplayName("Current Address")]
-        public string CurrentAddress { get; set; }
-        [DisplayName("Permanent Address")]
-        public string PermanentAddress { get; set; }
-        [DisplayName("Mobile Number")]
-        public string MobileNumber { get; set; }
-        public string SmsAccessToken { get; set; }
-
-        /*[Required]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Must be a vaild email.")]
-        public string Email { get; set; }*/
-
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
-
-        public virtual List<EmploymentInformation> EmploymentInformation { get; set; }
-    }
-
-    public class EmploymentInformation
-    {
-        public EmploymentInformation() { }
-        public EmploymentInformation(EmploymentInformationViewModel employment, Client client)
-        {
-            SourceOfFunds = employment.SourceOfFunds;
-            SourceOfFundsInfo = employment.SourceOfFundsInfo;
-            Employer = employment.Employer;
-            Position = employment.Position;
-            FormOfBusiness = employment.FormOfBusiness;
-            EmployerBusinessAddress = employment.EmployerBusinessAddress;
-            ContactNumber = employment.ContactNumber;
-            NatureOfJob = employment.NatureOfJob;
-            YearsInJob = employment.YearsInJob;
-            IsOFW = employment.IsOFW;
-
-            TimestampCreated = DateTime.Now;
-            Client = client;
-        }
-
-        public int EmploymentInformationId { get; set; }
-
-        [Required]
-        [DisplayName("Source of Funds")]
-        public SourceOfFundsType SourceOfFunds { get; set; }
-        [DisplayName("Source of Funds Info")]
-        public string SourceOfFundsInfo { get; set; }
-
-        [Required]
-        [DisplayName("Employer")]
-        public string Employer { get; set; }
-        [Required]
-        [DisplayName("Position")]
+        [DisplayName("Gender")]
+        public bool IsFemale { get; set; }
         public string Position { get; set; }
-        [Required]
-        [DisplayName("Nature of Business")]
-        public FormOfBusinessType FormOfBusiness { get; set; }
-        [Required]
-        [DisplayName("Employer Address")]
-        public string EmployerBusinessAddress { get; set; }
-        [Required]
-        [DisplayName("Contact Number")]
-        public string ContactNumber { get; set; }
-        [Required]
-        [DisplayName("Nature of Job")]
-        public string NatureOfJob { get; set; }
-        [Required]
-        [DisplayName("Years in Job")]
-        public byte YearsInJob { get; set; }
-
-        [DisplayName("Is an OFW")]
-        public bool IsOFW { get; set; }
+        public string Email { get; set; }
+        [DisplayName("MobileNumber")]
+        public string MobileNumber { get; set; }
 
         public DateTime TimestampCreated { get; set; }
 
         public int ClientId { get; set; }
         public virtual Client Client { get; set; }
+    }
+
+    public class ClientInvitation
+    {
+        public int ClientInvitationId { get; set; }
+        public string Email { get; set; }
+        public string BusinessName { get; set; }
+        public FormOfBusinessType FormOfBusiness { get; set; }
+        public Guid Token { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 
     public enum CivilStatusType

@@ -12,6 +12,7 @@ namespace ReverseSpectre.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(ReverseSpectre.Models.ApplicationDbContext context)
@@ -32,46 +33,9 @@ namespace ReverseSpectre.Migrations
                 roleManager.Create(role);
             }
 
-            // Accounts
-            var userStore = new UserStore<ApplicationUser>(context);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-
-            if (!context.Users.Any(u => u.UserName == "jackrobertfrost@mailinator.com"))
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = "jackrobertfrost@mailinator.com",
-                    Email = "jackrobertfrost@mailinator.com",
-                    EmailConfirmed = true,
-                };
-                userManager.Create(user, "Testing@123");
-                userManager.AddToRole(user.Id, "Client");
-
-                context.Clients.Add(new Client()
-                {
-                    FirstName = "Jack",
-                    MiddleName = "Robert",
-                    LastName = "Masahud",
-                    Birthdate = new DateTime(1990, 1, 1),
-                    Nationality = "Philippines",
-                    UserId = user.Id
-                });
-            }
-            else
-            {
-                var user = userManager.FindByEmail("jackrobertfrost@mailinator.com");
-                userManager.AddToRole(user.Id, "Client");
-            }
-
-            // Misc
-            context.LoanTypes.AddOrUpdate(new LoanType()
-            {
-                LoanTypeId = 1,
-                InterestRate = 0.05,
-                Name = "Home Loan"
-            });
-
-
+            //// Accounts
+            //var userStore = new UserStore<ApplicationUser>(context);
+            //var userManager = new UserManager<ApplicationUser>(userStore);
             
         }
     }
