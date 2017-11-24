@@ -38,7 +38,10 @@ namespace ReverseSpectre.Models
         public ClientViewModel() { }
         public ClientViewModel(Client client)
         {
-            
+            BusinessAddress = client.BusinessAddress;
+            BusinessName = client.BusinessName;
+            FormOfBusiness = client.FormOfBusiness;
+            TelephoneNumber = client.TelephoneNumber;
         }
 
         public int ClientId { get; set; }
