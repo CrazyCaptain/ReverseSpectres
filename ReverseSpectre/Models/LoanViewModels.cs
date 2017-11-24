@@ -12,9 +12,18 @@ namespace ReverseSpectre.Models
         [Required]
         public string Email { get; set; }
         [Required]
+        [DisplayName("Business Name")]
         public string BusinessName { get; set; }
         [Required]
+        [DisplayName("Form of Business")]
         public FormOfBusinessType FormOfBusiness { get; set; }
+        [Required]
+        [DisplayName("Accounting Officer")]
+        public int AccountingOfficerId { get; set; }
+        [Required]
+        public double Amount { get; set; }
+        [Required]
+        public int Term { get; set; }
     }
 
     public class LoanApplicationViewModel

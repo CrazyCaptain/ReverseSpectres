@@ -39,6 +39,12 @@ namespace ReverseSpectre.Migrations
                 roleManager.Create(role);
             }
 
+            if (!context.Roles.Any(r => r.Name == "AccountingOfficer"))
+            {
+                var role = new IdentityRole { Name = "AccountingOfficer" };
+                roleManager.Create(role);
+            }
+
             // Bank
             if (!context.Banks.Any(b => b.BankId == 1))
             {
@@ -61,6 +67,9 @@ namespace ReverseSpectre.Migrations
                     UserName = "reversehack_bm@mailinator.com",
                     Email = "reversehack_bm@mailinator.com",
                     EmailConfirmed = true,
+                    FirstName = "First",
+                    MiddleName = "Middle",
+                    LastName = "Last",
                 };
                 userManager.Create(user, "Testing@123");
                 userManager.AddToRole(user.Id, "Client");
@@ -82,6 +91,9 @@ namespace ReverseSpectre.Migrations
                     UserName = "reversehack_rm@mailinator.com",
                     Email = "reversehack_rm@mailinator.com",
                     EmailConfirmed = true,
+                    FirstName = "First",
+                    MiddleName = "Middle",
+                    LastName = "Last",
                 };
                 userManager.Create(user, "Testing@123");
                 userManager.AddToRole(user.Id, "RelationshipManager");
@@ -96,6 +108,29 @@ namespace ReverseSpectre.Migrations
                 });
             }
 
+            // Account Officer
+            if (!context.Users.Any(u => u.UserName == "reversehack_ao@mailinator.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "reversehack_ao@mailinator.com",
+                    Email = "reversehack_ao@mailinator.com",
+                    EmailConfirmed = true,
+                    FirstName = "First",
+                    MiddleName = "Middle",
+                    LastName = "Last",
+                };
+                userManager.Create(user, "Testing@123");
+                userManager.AddToRole(user.Id, "AccountingOfficer");
+
+                context.AccountingOfficers.Add(new AccountingOfficer()
+                {
+                    AccountingOfficerId = 1,
+                    IsDisabled = false,
+                    TimestampCreated = DateTime.Now,
+                    UserId = user.Id
+                });
+            }
         }
     }
 }

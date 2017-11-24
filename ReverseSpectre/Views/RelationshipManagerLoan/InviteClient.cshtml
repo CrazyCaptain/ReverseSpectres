@@ -1,0 +1,108 @@
+﻿@model ReverseSpectre.Models.ClientInvitationViewModel
+@{
+    ViewBag.Title = "InviteClient";
+    Layout = "~/Views/Shared/_Layout_Unpadded.cshtml";
+    List<SelectListItem> accountingOfficerList = (List<SelectListItem>)ViewBag.AccountingOfficerList ?? new List<SelectListItem>();
+}
+
+<div class="section-container">
+
+    <div class="section-header">
+        <h3>Invite Client</h3>
+        <div>
+            @Html.ActionLink("Go Back", "Index")
+        </div>
+    </div>
+
+    <div class="section-content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <h4 style="margin-bottom:20px;">Client</h4>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.BusinessName, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BusinessName, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.BusinessName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.FormOfBusiness, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.FormOfBusiness, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(model => model.FormOfBusiness, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <h4>Loan</h4>
+                
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Term, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Term, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.Term, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.AccountingOfficerId, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.AccountingOfficerId, accountingOfficerList, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(model => model.AccountingOfficerId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                                
+                <div class="form-group">
+                    <center>
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </center>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Section Content End-->
+</div>
+<!-- Section Container End-->
+
+@section Styles {
+    <style>
+        label {
+            padding-left: 4px;
+            margin-bottom: 8px !important;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 35px !important;
+        }
+
+            .form-group:last-child {
+                margin-top: 40px;
+            }
+    </style>
+}

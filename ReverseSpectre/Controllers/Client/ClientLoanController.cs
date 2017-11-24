@@ -20,9 +20,9 @@ namespace ReverseSpectre.Controllers
 
         public ActionResult Index()
         {
-            var model = db.LoanApplication.Include("LoanType").Where(m => m.Client.User.UserName == User.Identity.Name);
+            var model = db.LoanApplication.First(m => m.Client.User.UserName == User.Identity.Name);
 
-            return View(model.ToList());
+            return View(model);
         }
 
         [Route("applications/{id}")]

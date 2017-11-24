@@ -10,10 +10,10 @@ namespace ReverseSpectre.Models
     public class LoanApplication
     {
         public LoanApplication() { }
-        public LoanApplication(LoanApplicationViewModel application, Client client)
+        public LoanApplication(ClientInvitation invitation, Client client)
         {
-            Amount = application.Amount;
-            Term = application.Term;
+            Amount = invitation.Amount;
+            Term = invitation.Term;
             TimestampCreated = DateTime.Now;
             LoanStatus = LoanStatusType.Pending;
             Client = client;

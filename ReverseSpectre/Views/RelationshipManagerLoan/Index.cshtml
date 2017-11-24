@@ -1,0 +1,31 @@
+﻿@model List<ReverseSpectre.Models.LoanApplication>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Loans</h3>
+
+
+<p>@Html.ActionLink("Add Client", "InviteClient")</p>
+
+<table>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Amount</th>
+            <th>Term</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Client.BusinessName</td>
+                <td>@item.LoanStatus</td>
+                <td>@item.Amount</td>
+                <td>@item.Term</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

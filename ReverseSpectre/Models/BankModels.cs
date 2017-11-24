@@ -45,6 +45,17 @@ namespace ReverseSpectre.Models
         public virtual ApplicationUser User { get; set; }
     }
 
+    public class AccountingOfficer
+    {
+        public int AccountingOfficerId { get; set; }
+        public bool IsDisabled { get; set; }
+        public DateTime TimestampCreated { get; set; }
+        
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+    }
+
     public class Client
     {
         public Client() { }
@@ -55,6 +66,8 @@ namespace ReverseSpectre.Models
             FormOfBusiness = invitation.FormOfBusiness;
             TelephoneNumber = client.TelephoneNumber;
 
+            RelationshipManagerId = invitation.RelationshipManagerId;
+            AccountingOfficerId = invitation.AccountingOfficerId;
             UserId = user.Id;
         }
 
@@ -75,6 +88,9 @@ namespace ReverseSpectre.Models
 
         public int RelationshipManagerId { get; set; }
         public virtual RelationshipManager RelationshipManager { get; set; }
+
+        public int AccountingOfficerId { get; set; }
+        public virtual AccountingOfficer AccountingOfficer { get; set; }
 
         public virtual List<ContactInformation> ContactInformation { get; set; }
     }
@@ -132,17 +148,25 @@ namespace ReverseSpectre.Models
             Token = Guid.NewGuid();
             Timestamp = DateTime.Now;
             RelationshipManager = rm;
+            AccountingOfficerId = invitation.AccountingOfficerId;
         }
 
         public int ClientInvitationId { get; set; }
+        public double Amount { get; set; }
+        public int Term { get; set; }
         public string Email { get; set; }
+        [DisplayName("Business Name")]
         public string BusinessName { get; set; }
+        [DisplayName("Form of Business")]
         public FormOfBusinessType FormOfBusiness { get; set; }
         public Guid Token { get; set; }
         public DateTime Timestamp { get; set; }
 
         public int RelationshipManagerId { get; set; }
         public virtual RelationshipManager RelationshipManager { get; set; }
+
+        public int AccountingOfficerId { get; set; }
+        public virtual AccountingOfficer AccountingOfficer { get; set; }
     }
 
     public enum CivilStatusType

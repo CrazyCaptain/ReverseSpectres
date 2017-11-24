@@ -1,0 +1,45 @@
+﻿@model ReverseSpectre.Models.ClientRegistrationEmailViewModel
+@{
+    Layout = null;
+}
+
+<style>
+    p, li {
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    li {
+        font-size: 0.9em;
+        color: #666;
+    }
+</style>
+<body style="background:#eee">
+
+    <div style="border:1px solid #aaa; margin:10px;padding:60px;max-width:600px;background:#fff;margin:40px auto">
+
+        <hr style="border:none;border-top:1px solid #dedede;margin-top:40px;margin-bottom:40px;" />
+
+        <p style="color:#333;">Greetings @Model.Name,</p>
+
+        <p style="font-size:0.9em;color:#444;">This account is entitled solely for the use of the HR or the equivalent. We advise that you do not interchange your <strong>moderator</strong> account with your <strong>administrator</strong> account.:</p>
+        <p style="font-size:0.9em;color:#444;">With this account you will be able to use the following features:</p>
+        <ul>
+            <li>Monitor your loan application</li>
+        </ul>
+        <p style="font-size:0.9em;color:#333;">Unionbank hopes that our system is able to contribute to your daily activities and we welcome your concerns and value your input regarding our system.</p>
+        <p style="font-size:0.9em;color:#666;">Please click the link below to complete with your registration.</p>
+        <p style="font-size:0.9em;color:#666;"><a href="@Model.RedirectUrl" target="_blank">Click here to continue...</a></p>
+
+        <br />
+        <hr style="border:none;border-top:1px solid #dedede;margin-top:40px;margin-bottom:40px;" />
+
+        <div style="width:100%;clear:both;">
+
+            <p style="margin-bottom:0px;">Best,</p>
+            <div>
+                <p style="font-size:0.9em;color:#666;">Unionbank</p>
+            </div>
+
+        </div>
+    </div>
+</body>

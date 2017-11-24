@@ -286,6 +286,14 @@
     <Compile Include="Migrations\201711230837088_added_RM_FK_to_ClientInvitation.Designer.cs">
       <DependentUpon>201711230837088_added_RM_FK_to_ClientInvitation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711240529063_added_name_to_user.cs" />
+    <Compile Include="Migrations\201711240529063_added_name_to_user.Designer.cs">
+      <DependentUpon>201711240529063_added_name_to_user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711240549059_added_AccountingOfficer.cs" />
+    <Compile Include="Migrations\201711240549059_added_AccountingOfficer.Designer.cs">
+      <DependentUpon>201711240549059_added_AccountingOfficer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankModels.cs" />
@@ -382,6 +390,10 @@
     <Content Include="Views\ClientProfile\Edit.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\ClientProfile\EditEmploymentInfo.cshtml" />
+    <Content Include="Views\RelationshipManagerLoan\Index.cshtml" />
+    <Content Include="Views\RelationshipManagerLoan\CreateLoan.cshtml" />
+    <Content Include="Views\RelationshipManagerLoan\InviteClient.cshtml" />
+    <Content Include="Views\RelationshipManagerLoan\ClientInvitationEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -430,6 +442,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711230837088_added_RM_FK_to_ClientInvitation.resx">
       <DependentUpon>201711230837088_added_RM_FK_to_ClientInvitation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711240529063_added_name_to_user.resx">
+      <DependentUpon>201711240529063_added_name_to_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711240549059_added_AccountingOfficer.resx">
+      <DependentUpon>201711240549059_added_AccountingOfficer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

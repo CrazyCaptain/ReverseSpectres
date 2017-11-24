@@ -139,9 +139,10 @@ namespace ReverseSpectre.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string token)
         {
-            return View();
+            ClientRegistrationModel model = new ClientRegistrationModel() { Token = token };
+            return View(model);
         }
 
         //
@@ -158,6 +159,13 @@ namespace ReverseSpectre.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+
+
+                if (invitation.Timestamp.AddDays(2) < DateTime.Now)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
                 if (ModelState.IsValid)
                 {
 
@@ -165,11 +173,22 @@ namespace ReverseSpectre.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
+                        // Add role
+                        await UserManager.AddToRoleAsync(user.Id, "Client");
+
                         // Create client entry
+                        Client client = new Client(model, user, invitation);
+                        db.Clients.Add(client);
 
-                        db.Clients.Add(new ReverseSpectre.Models.Client(model, user, invitation));
+                        // Create loan entry
+                        LoanApplication application = new LoanApplication(invitation, client);
+                        db.LoanApplication.Add(application);
+
+                        // Create loan requirements entries
+                        db.LoanApplicationDocuments.AddRange(Helper.LoanRequirements.GetBasicLoanRequirements(application));
+                        
+
                         await db.SaveChangesAsync();
-
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // Send an email notification
