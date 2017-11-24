@@ -11,7 +11,9 @@ using System.IO;
 namespace ReverseSpectre.Controllers
 {
     [Authorize(Roles = "RelationshipManager")]
-    public class RelationshipManagerLoanController : Controller
+    [RoutePrefix("relationshipmanager/client")]
+    [Route("{action=index}")]
+    public class RelationshipManagerClientController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
            
@@ -26,7 +28,7 @@ namespace ReverseSpectre.Controllers
             return View(loans);
         }
 
-        public ActionResult Loan(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -41,7 +43,7 @@ namespace ReverseSpectre.Controllers
             return View(loan);
         }
 
-        public ActionResult InviteClient()
+        public ActionResult Add()
         {
 
             var query = db.AccountingOfficers.Include("User");
@@ -62,7 +64,7 @@ namespace ReverseSpectre.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> InviteClient(ClientInvitationViewModel model)
+        public async Task<ActionResult> Add(ClientInvitationViewModel model)
         {
             if (ModelState.IsValid)
             {

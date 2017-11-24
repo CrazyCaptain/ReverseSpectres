@@ -241,7 +241,8 @@
     <Compile Include="Controllers\Client\ClientProfileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RelationshipManager\RelationshipManagerLoanController.cs" />
+    <Compile Include="Controllers\RelationshipManager\RelationshipManagerDashboardController.cs" />
+    <Compile Include="Controllers\RelationshipManager\RelationshipManagerClientController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -390,16 +391,15 @@
     <Content Include="Views\ClientProfile\Edit.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\ClientProfile\EditEmploymentInfo.cshtml" />
-    <Content Include="Views\RelationshipManagerLoan\Index.cshtml" />
-    <Content Include="Views\RelationshipManagerLoan\CreateLoan.cshtml" />
-    <Content Include="Views\RelationshipManagerLoan\InviteClient.cshtml" />
-    <Content Include="Views\RelationshipManagerLoan\ClientInvitationEmail.cshtml" />
+    <Content Include="Views\RelationshipManagerClient\Index.cshtml" />
+    <Content Include="Views\RelationshipManagerClient\Details.cshtml" />
+    <Content Include="Views\RelationshipManagerClient\Add.cshtml" />
+    <Content Include="Views\RelationshipManagerClient\ClientInvitationEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Client\" />
-    <Folder Include="Views\RelationshipManagerLoans\" />
-    <Folder Include="Views\RoleManager\" />
+    <Folder Include="Views\RelationshipManagerDashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
