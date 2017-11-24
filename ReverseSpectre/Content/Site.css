@@ -1,17 +1,67 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html{
+  position: relative; /* Allows the footer to notice content height */
+  min-height: 100%; /* My page will allways take the full screen */
+}
+
+body {
+    /*height:100%;*/
+    min-height:100%;
+}
+
+body {
+    font-family:Raleway, Helvetica, sans-serif
+}
+
+.section-container {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    max-width: 800px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    margin-bottom:40px;
+}
+.section-header {
+    padding:0px 40px 10px;
+    border-bottom:1px solid #e7e7e7;
+}
+.section-header-edit {
+    margin-left:10px;
+    font-size:0.75em !important;
+}
+.section-content {
+    padding:20px 40px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    /*padding-left: 15px;
+    padding-right: 15px;*/
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
+
+.footer {
+    background:rgba(249, 153, 51, 0.9);
+    padding:0px 20px;
+    color:#fff;
+    border-top:1px solid #e7e7e7;
+    position:absolute;
+    bottom:0px;
+    width:100%;
+    margin-bottom:-61px;
+}
+.footer-content {
+    background:rgba(247, 127, 0, 0.65);
+    padding:20px 0px;
+}
+
+.footer span {
+    text-shadow:0px 0px 4px rgba(50,50,50, 0.5);
+}
+
 .dl-horizontal dt {
     white-space: normal;
 }
@@ -21,4 +71,15 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/* Fonts */
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-SemiBold.ttf') format('truetype');
+    font-weight:bold;
+}
+@font-face {
+    font-family:'Raleway';
+    src:url('../fonts/Raleway-Regular.ttf') format('truetype');
 }

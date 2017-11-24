@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ReverseSpectre.Models;
 using System.IO;
+using System.Net;
 
 namespace ReverseSpectre.Controllers
 {
@@ -138,9 +139,10 @@ namespace ReverseSpectre.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string token)
         {
-            return View();
+            ClientRegistrationModel model = new ClientRegistrationModel() { Token = token };
+            return View(model);
         }
 
         //
@@ -150,32 +152,58 @@ namespace ReverseSpectre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(ClientRegistrationModel model)
         {
-            if (ModelState.IsValid)
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var invitation = db.ClientInvitations.FirstOrDefault(m => m.Token == new Guid(model.Token));
+                if (invitation == null)
                 {
-                    // Create client entry
-                    using (ApplicationDbContext db = new ApplicationDbContext())
-                    {
-                        db.Clients.Add(new ReverseSpectre.Models.Client(model, user));
-                        await db.SaveChangesAsync();
-                    }
-
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // Send an email notification
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await Helper.Email.SendEmailAsync(
-                        user.Email, 
-                        "Confirm your account", 
-                        RenderPartialViewToString("ClientRegistrationEmail", new ClientRegistrationEmailViewModel() { Name = model.FullName }));
-
-                    return RedirectToAction("Index", "Home");
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                AddErrors(result);
+
+
+                if (invitation.Timestamp.AddDays(2) < DateTime.Now)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                if (ModelState.IsValid)
+                {
+
+                    var user = new ApplicationUser { UserName = invitation.Email, Email = invitation.Email };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        // Add role
+                        await UserManager.AddToRoleAsync(user.Id, "Client");
+
+                        // Create client entry
+                        Client client = new Client(model, user, invitation);
+                        db.Clients.Add(client);
+
+                        // Create loan entry
+                        LoanApplication application = new LoanApplication(invitation, client);
+                        db.LoanApplication.Add(application);
+
+                        // Create loan requirements entries
+                        db.LoanApplicationDocuments.AddRange(Helper.LoanRequirements.GetBasicLoanRequirements(application));
+                        
+
+                        await db.SaveChangesAsync();
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // Send an email notification
+                        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        await Helper.Email.SendEmailAsync(
+                            user.Email,
+                            "Confirm your account",
+                            RenderPartialViewToString("ClientRegistrationEmail", new ClientRegistrationEmailViewModel() { Name = $"{model.ContactInformation.LastName}" }));
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+
+                }
             }
 
             return View(model);

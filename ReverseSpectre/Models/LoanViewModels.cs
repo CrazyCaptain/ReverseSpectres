@@ -7,6 +7,25 @@ using System.Web;
 
 namespace ReverseSpectre.Models
 {
+    public class ClientInvitationViewModel
+    {
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        [DisplayName("Business Name")]
+        public string BusinessName { get; set; }
+        [Required]
+        [DisplayName("Form of Business")]
+        public FormOfBusinessType FormOfBusiness { get; set; }
+        [Required]
+        [DisplayName("Accounting Officer")]
+        public int AccountingOfficerId { get; set; }
+        [Required]
+        public double Amount { get; set; }
+        [Required]
+        public int Term { get; set; }
+    }
+
     public class LoanApplicationViewModel
     {
         public double Amount { get; set; }
@@ -14,40 +33,6 @@ namespace ReverseSpectre.Models
         /// Duration in months.
         /// </summary>
         public int Term { get; set; }
-
-
-        public LoanApplicationPartnerViewModel Partner { get; set; }
-        public List<LoanApplicationReference> References { get; set; }
-    }
-
-    public class LoanApplicationPartnerViewModel
-    {
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string MiddleName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        public bool IsFemale { get; set; }
-        [Required]
-        public DateTime Birthdate { get; set; }
-        [Required]
-        public string Nationality { get; set; }
-        [Required]
-        public string Relationship { get; set; }
-        [Required]
-        [DisplayName("Mobile Number")]
-        public string MobileNumber { get; set; }
-        [Required]
-        public string Email { get; set; }
-        public string Employer { get; set; }
-        [Required]
-        public string Position { get; set; }
-        [Required]
-        public string EmployerAddress { get; set; }
-        [Required]
-        public int YearsInJob { get; set; }
     }
 
     public class LoanApplicationDocumentFileViewModel

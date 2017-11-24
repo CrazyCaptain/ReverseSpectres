@@ -1,0 +1,125 @@
+﻿@model ReverseSpectre.Models.ClientViewModel
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout_Unpadded.cshtml";
+}
+
+<div class="section-container">
+
+    <div class="section-header">
+        <h3>Profile<span><a class="section-header-edit" href="@Url.Action("Edit")"><span>edit <span class="glyphicon glyphicon-edit"></span></span></a></span></h3>
+    </div>
+
+    <div class="section-content">
+
+        <div class="row form-group">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.BusinessName, htmlAttributes: new { @class = "control-label" })
+                <p>@Model.BusinessName</p>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.FormOfBusiness, htmlAttributes: new { @class = "control-label" })
+                <p>@Model.FormOfBusiness</p>
+            </div>
+        </div>
+        
+        <div class="row form-group">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.BusinessAddress, htmlAttributes: new { @class = "control-label" })
+                <pre>@Model.BusinessAddress</pre>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.TelephoneNumber, htmlAttributes: new { @class = "control-label" })
+                <p>@Model.TelephoneNumber</p>
+            </div>
+        </div>
+    </div>
+    <!-- Section Content End-->
+</div>
+<!-- Section Container End-->
+
+<div class="section-container">
+    <div class="section-header">
+        <h3>Employee Info<span><a class="section-header-edit" href="@Url.Action("EditEmploymentInfo")"><span>edit <span class="glyphicon glyphicon-edit"></span></span></a></span></h3>
+    </div>
+
+    <div class="section-content">
+        
+        @foreach (var item in Model.ContactInformation)
+        {
+            <div class="row form-group">
+                <div class="col-md-6">
+                    @Html.Label("First Name", new { @class = "control-label" })
+                    <p>@item.FirstName</p>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.Label("Middle Name", new { @class = "control-label" })
+                    <p>@item.MiddleName</p>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-6">
+                    @Html.Label("Last Name", new { @class = "control-label" })
+                    <p>@item.LastName</p>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.Label("Position", new { @class = "control-label" })
+                    <p>@item.Position</p>
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-md-6">
+                    @Html.Label("Gender", new { @class = "control-label" })
+                    @if (item.IsFemale)
+                    {
+                        <p>Female</p>
+                    }
+                    else
+                    {
+                        <p>Male</p>
+                    }
+                </div>
+
+                <div class="col-md-6">
+                    @Html.Label("Mobile Number", new { @class = "control-label" })
+                    <p>@item.MobileNumber</p>
+                </div>
+            </div>
+            
+            <hr />
+        }
+        
+    </div>
+    <!-- Section Content End-->
+</div>
+<!-- Section Container End-->
+
+@section Styles {
+    <style>
+        label {
+            padding-left: 4px;
+            margin-bottom: 8px !important;
+        }
+        p {
+            margin-left: 4px;
+        }
+        pre {
+            border:none;
+            padding:0px 0px 0px 4px;
+            background:none;
+            font-size:1em;
+            font-family:Raleway, Helvetica, sans-serif
+        }
+
+        .form-input {
+            width: 100%;
+        }
+    </style>
+}

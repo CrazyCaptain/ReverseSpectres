@@ -1,0 +1,158 @@
+﻿@model ReverseSpectre.Models.EmploymentInformationViewModel
+
+@{
+    ViewBag.Title = "Employment Info";
+    Layout = "~/Views/Shared/_Layout_Unpadded.cshtml";
+}
+
+<div class="section-container">
+
+    <div class="section-header">
+        <h3>Edit Employment Info</h3>
+        <div>
+            @Html.ActionLink("Go Back", "Index")
+        </div>
+    </div>
+
+    <div class="section-content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.SourceOfFunds, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.SourceOfFunds, htmlAttributes: new { @class = "form-input" })
+                        @Html.ValidationMessageFor(model => model.SourceOfFunds, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.Label("SourceOfFundsInfo", "Details ", htmlAttributes: new { @class = "control-label" })
+                        @if (Model.SourceOfFunds == ReverseSpectre.Models.SourceOfFundsType.Others)
+                        {
+                            @Html.EditorFor(model => model.SourceOfFundsInfo, new { htmlAttributes = new { @class = "form-input" } })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.SourceOfFundsInfo, new { htmlAttributes = new { @class = "form-input", @disabled = true } })
+                        }
+                        @Html.ValidationMessageFor(model => model.SourceOfFundsInfo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Employer, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Employer, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.Employer, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.FormOfBusiness, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.FormOfBusiness, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(model => model.FormOfBusiness, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.EmployerBusinessAddress, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.EmployerBusinessAddress, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.EmployerBusinessAddress, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.ContactNumber, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ContactNumber, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Position, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.NatureOfJob, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.NatureOfJob, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.NatureOfJob, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.YearsInJob, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.YearsInJob, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.YearsInJob, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.IsOFW, htmlAttributes: new { @class = "control-label" })
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.RadioButton("IsOFW", false, true, new { @id = "IsOFWFalse" })
+                                <label for="IsOFWFalse">No</label>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.RadioButton("IsOFW", false, false, new { @id = "IsOFWTrue" })
+                                <label for="IsOFWTrue">Yes</label>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.IsOFW, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <center>
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </center>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Section Content End-->
+</div>
+<!-- Section Container End-->
+
+@section Styles {
+    <style>
+        label {
+            padding-left: 4px;
+            margin-bottom: 8px !important;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 35px !important;
+        }
+
+            .form-group:last-child {
+                margin-top: 40px;
+            }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).on("change", "#SourceOfFunds", function () {
+            if($("#SourceOfFunds option:selected").text() == "Others"){
+                $("#SourceOfFundsInfo").attr("disabled", false);
+                $("#SourceOfFundsInfo").attr("required", true);
+                $("#SourceOfFundsInfo").val("");
+            } else {
+                $("#SourceOfFundsInfo").attr("disabled", true);
+                $("#SourceOfFundsInfo").attr("required", false);
+                $("#SourceOfFundsInfo").val("");
+            }
+        });
+    </script>
+}

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ReverseSpectre.Models;
+using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 
 namespace ReverseSpectre
 {
@@ -78,79 +80,53 @@ namespace ReverseSpectre
             }
         }
 
+        public class SelectListHelper
+        {
+            public static IEnumerable<SelectListItem> SourceOfFundsList
+            {
+                get
+                {
+                    List<SelectListItem> list = new List<SelectListItem>();
+                    foreach (var item in Enum.GetValues(typeof(SourceOfFundsType)))
+                    {
+                        list.Add(new SelectListItem()
+                        {
+                            Text = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name,
+                            Value = ((int)item).ToString()
+                        });
+                    }
+                    return list;
+                }
+            }
+
+            public IEnumerable<SelectListItem> FormOfBusinessList
+            {
+                get
+                {
+                    List<SelectListItem> list = new List<SelectListItem>();
+                    foreach (var item in Enum.GetValues(typeof(FormOfBusinessType)))
+                    {
+                        list.Add(new SelectListItem()
+                        {
+                            Text = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name,
+                            Value = ((int)item).ToString()
+                        });
+                    }
+                    return list;
+                }
+            }
+
+        }
+
         public class LoanRequirements
         {
-            public static List<LoanApplicationDocument> GetHomeLoanRequirements(LoanApplication application)
+            public static List<LoanApplicationDocument> GetBasicLoanRequirements(LoanApplication application)
             {
                 // Set required documents
                 List<LoanApplicationDocument> documents = new List<LoanApplicationDocument>();
                 documents.Add(new LoanApplicationDocument()
                 {
-                    Name = "Marriage Contract",
-                    Comment = "Only if applicable",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Government Id",
-                    Comment = "Requires picture and signature",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Certificate of Employment",
-                    Comment = "For locally employed applicants",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Payslips",
-                    Comment = "3 months latest payslips",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Business Registration",
-                    Comment = "For self-employed applicants",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Bank Statements",
-                    Comment = "For self-employed applicants",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Bank Statements",
-                    Comment = "For self-employed applicants",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Income Tax Return",
-                    Comment = "For self-employed applicants",
-                    TimestampCreated = DateTime.Now,
-                    Status = LoanDocumentStatusType.Pending,
-                    LoanApplication = application
-                });
-                documents.Add(new LoanApplicationDocument()
-                {
-                    Name = "Statement of Account",
+                    Name = "Certificate of Registration",
                     Comment = "",
                     TimestampCreated = DateTime.Now,
                     Status = LoanDocumentStatusType.Pending,
@@ -158,7 +134,7 @@ namespace ReverseSpectre
                 });
                 documents.Add(new LoanApplicationDocument()
                 {
-                    Name = "Contract to Sell or Reservation Agreement",
+                    Name = $"Financial Statement - {DateTime.Today.Year}",
                     Comment = "",
                     TimestampCreated = DateTime.Now,
                     Status = LoanDocumentStatusType.Pending,

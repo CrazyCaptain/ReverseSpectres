@@ -1,110 +1,138 @@
 ﻿@model ReverseSpectre.Models.ClientRegistrationModel
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout_Unpadded.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
+<div class="section-container">
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.MiddleName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Birthdate, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Birthdate, new { @class = "form-control", type = "date" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nationality, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Nationality, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.CivilStatus, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })*@
-            @Html.EnumDropDownListFor(m => m.CivilStatus, new { @class = "col-md-2 control-label" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.TIN, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.TIN, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.SSS, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.SSS, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.CurrentAddress, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.CurrentAddress, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.PermanentAddress, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.PermanentAddress, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.MobileNumber, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })
+    <div class="section-header">
+        <h3>Register</h3>
+        <div>
+            @Html.ActionLink("Go Back", "Login")
         </div>
     </div>
 
-    <hr />
+    <div class="section-content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(m => m.Token)
+                <h4 style="margin-bottom:20px;">Company</h4>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.BusinessAddress, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BusinessAddress, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.BusinessAddress, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.TelephoneNumber, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.TelephoneNumber, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.TelephoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <hr />
+
+                <h4 style="margin-bottom:20px;">User</h4>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.ContactInformation.FirstName, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ContactInformation.FirstName, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.ContactInformation.FirstName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.ContactInformation.MiddleName, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ContactInformation.MiddleName, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.ContactInformation.MiddleName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.ContactInformation.LastName, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ContactInformation.LastName, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.ContactInformation.LastName, "", new { @class = "text-danger" })
+                    </div>
+
+                    @*<div class="col-md-6">
+                        @Html.LabelFor(model => model.ContactInformation.IsFemale, htmlAttributes: new { @class = "control-label" })
+                        
+                        @Html.ValidationMessageFor(model => model.ContactInformation.IsFemale, "", new { @class = "text-danger" })
+                    </div>*@
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.ContactInformation.Position, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ContactInformation.Position, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.ContactInformation.Position, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.ContactInformation.MobileNumber, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ContactInformation.MobileNumber, new { htmlAttributes = new { @class = "form-input" } })
+                        @Html.ValidationMessageFor(model => model.ContactInformation.MobileNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <hr />
+
+                <h4 style="margin-bottom:20px;">Account</h4>
+                
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <center>
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </center>
+                </div>
+            </div>
+        }
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
+    <!-- Section Content End-->
+</div>
+<!-- Section Container End-->
+
+@section Styles {
+    <style>
+        label {
+            padding-left: 4px;
+            margin-bottom: 8px !important;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 35px !important;
+        }
+
+            .form-group:last-child {
+                margin-top: 40px;
+            }
+    </style>
 }
 
 @section Scripts {
