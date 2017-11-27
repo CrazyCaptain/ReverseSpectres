@@ -20,7 +20,7 @@ namespace ReverseSpectre.Controllers
 
         public ActionResult Index()
         {
-            var model = db.LoanApplications.First(m => m.Client.User.UserName == User.Identity.Name);
+            var model = db.LoanApplications.FirstOrDefault(m => m.Client.User.UserName == User.Identity.Name);
 
             return View(model);
         }
