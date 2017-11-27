@@ -1,0 +1,46 @@
+﻿@model ReverseSpectre.Models.LoanApplication
+@{
+    ViewBag.Title = "LoanApplication";
+}
+
+<h3>Loan # @Model.LoanApplicationId</h3>
+<h5>Client: @Model.Client.User.Email</h5>
+<h4>@Html.ActionLink("Add Requirement", "AddRequirement", new { id = Model.LoanApplicationId })</h4>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Document</th>
+            <th>Added on</th>
+            <th>Comment</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+
+        @foreach (var document in Model.LoanApplicationDocuments)
+        {
+            <tr style="background:#f2f2f2;">
+                <td>@document.Name</td>
+                <td>@document.TimestampCreated.ToString()</td>
+                <td>@document.Comment</td>
+                <td>@document.Status</td>
+                <td style="text-align:right;">
+                    @Html.ActionLink("Approve", "Approve", new { id = document.LoanApplicationDocumentId }, new { @class="btn btn-xs btn-success" })
+                    @Html.ActionLink("Request Revision", "ReviseRequirement", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-warning" })
+                    @Html.ActionLink("Deny", "Deny", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-danger" })
+                </td>
+            </tr>
+
+            foreach (var file in document.Files)
+            {
+                <tr>
+                    <td><a href="@file.Url" target="_blank">Download</a></td>
+                    <td>@file.TimestampCreated.ToString()</td>
+                    <td>@file.FileType.Substring(1)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

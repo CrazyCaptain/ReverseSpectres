@@ -62,16 +62,40 @@ namespace ReverseSpectre.Models
         public virtual LoanApplicationDocument LoanApplicationDocument { get; set; }
     }
 
+    public class LoanDocumentReviseModel
+    {
+        public LoanDocumentReviseModel() { }
+
+        public LoanDocumentReviseModel(LoanApplicationDocument lad)
+        {
+            LoanApplicationDocumentId = lad.LoanApplicationDocumentId;
+            Comment = lad.Comment;
+            Name = lad.Name;
+            LoanApplicationId = lad.LoanApplicationId;
+        }
+
+        public int LoanApplicationDocumentId { get; set; }
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public int LoanApplicationId { get; set; }
+    }
+
     public enum LoanStatusType
     {
         [Display(Name = "Pending for Review")]
         Pending = 0,
-        [Display(Name = "Processing")]
-        Processing = 1,
-        [Display(Name = "Approved")]
-        Approved = 2,
-        [Display(Name = "Denied")]
-        Denied = 3,
+        [Display(Name = "Credit Investigation")]
+        CreditInvestigation = 1,
+        [Display(Name = "Trade Checking")]
+        TradeChecking = 2,
+        [Display(Name = "Credit Risk")]
+        CreditRisk = 3,
+        [Display(Name = "Creating Proposal")]
+        CreatingProposal = 4,
+        [Display(Name = "Analyzing Proposal")]
+        AnalyzingProposal = 5,
+        [Display(Name = "Approve Loan")]
+        Approved = 6,
     }
 
     public enum LoanDocumentStatusType
@@ -85,5 +109,4 @@ namespace ReverseSpectre.Models
         [Display(Name = "Denied")]
         Denied = 3,
     }
-    
 }

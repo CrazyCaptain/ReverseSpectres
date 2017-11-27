@@ -19,7 +19,7 @@
                     }
                     else if (User.IsInRole("RelationshipManager"))
                     {
-                        <li></li>
+                        <li>@Html.ActionLink("Loans", "Index", "RelationshipManagerClient")</li>
                     }
                 }
             </ul>
