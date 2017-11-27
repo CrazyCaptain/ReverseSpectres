@@ -239,6 +239,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Client\ClientLoanController.cs" />
     <Compile Include="Controllers\Client\ClientProfileController.cs" />
+    <Compile Include="Controllers\CommercialBank\ComBankLoanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RelationshipManager\RelationshipManagerDashboardController.cs" />
@@ -322,13 +323,9 @@
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="AppSettingsSecrets.config" />
-    <Content Include="ConnectionStrings.config" />
     <Content Include="fonts\Raleway-Regular.ttf" />
     <Content Include="fonts\Raleway-SemiBold.ttf" />
+    <Content Include="AppSettingsSecrets.config" />
     <None Include="Properties\PublishProfiles\reversehack - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\reversehack - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\reversehackdemo - FTP.pubxml" />
@@ -397,6 +394,10 @@
     <Content Include="Views\RelationshipManagerClient\Details.cshtml" />
     <Content Include="Views\RelationshipManagerClient\Add.cshtml" />
     <Content Include="Views\RelationshipManagerClient\ClientInvitationEmail.cshtml" />
+    <Content Include="Views\ComBankLoan\Index.cshtml" />
+    <Content Include="Views\ComBankLoan\Details.cshtml" />
+    <Content Include="Views\ComBankLoan\AddRequirement.cshtml" />
+    <Content Include="Views\ComBankLoan\ReviseRequirement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

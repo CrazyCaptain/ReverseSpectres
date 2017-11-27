@@ -1,7 +1,31 @@
-﻿
+﻿@model ReverseSpectre.Models.LoanApplication
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "CreateLoan";
 }
 
-<h3>Details</h3>
+<h3>Loan Details</h3>
+
+<h4>@Model.Client.BusinessName's Loan</h4>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Document</th>
+            <th>Added on</th>
+            <th>Comment</th>
+            <th>Status</th>
+        </tr>
+        @foreach (var item in Model.LoanApplicationDocuments)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.TimestampCreated.ToString()</td>
+                <td>@item.Comment</td>
+                <td>@item.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Go Back", "Index");
 

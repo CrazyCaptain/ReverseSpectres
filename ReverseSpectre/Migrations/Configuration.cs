@@ -44,6 +44,12 @@ namespace ReverseSpectre.Migrations
                 roleManager.Create(role);
             }
 
+            if (!context.Roles.Any(r => r.Name == "CommercialBank"))
+            {
+                var role = new IdentityRole { Name = "CommercialBank" };
+                roleManager.Create(role);
+            }
+
             // Bank
             if (!context.Banks.Any(b => b.BankId == 1))
             {

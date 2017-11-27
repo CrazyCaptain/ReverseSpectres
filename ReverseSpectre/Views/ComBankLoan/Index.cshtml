@@ -1,0 +1,75 @@
+﻿@model List<ReverseSpectre.Models.LoanApplication>
+@{
+    ViewBag.Title = "Commercial Bank Loans View";
+}
+<h3>Loans</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Amount</th>
+            <th>Term</th>
+            <th>Interest Rate</th>
+            <th># Documents</th>
+            <th>Status</th>
+            <th>Date Created</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count == 0)
+        {
+
+        }
+        else
+        {
+            foreach (var l in Model)
+            {
+                <tr>
+                    <td>@l.Client.User.Email</td>
+                    <td>@l.Amount</td>
+                    <td>@l.Term months</td>
+                    <td>@l.Interest</td>
+                    <td>
+                        <font style="color:#026041">
+                            @l.LoanApplicationDocuments.Count(a => a.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved)
+                        </font>
+                        / @l.LoanApplicationDocuments.Count() approved
+                    </td>
+                    <td>@l.LoanStatus</td>
+                    <td>@l.TimestampCreated</td>
+                    <td>
+                        @if (l.LoanApplicationDocuments.Count() == l.LoanApplicationDocuments.Count(a => a.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved))
+                        {
+                            switch (l.LoanStatus)
+                            {
+                                case ReverseSpectre.Models.LoanStatusType.Pending:
+                                    @Html.ActionLink("For Credit Investigation", "CreditInvestigation", new { id = l.LoanApplicationId });
+                                    break;
+                                case ReverseSpectre.Models.LoanStatusType.CreditInvestigation:
+                                    @Html.ActionLink("For Trade Checking", "TradeChecking", new { id = l.LoanApplicationId });
+                                    break;
+                                case ReverseSpectre.Models.LoanStatusType.TradeChecking:
+                                    @Html.ActionLink("For Credit Risk", "CreditRisk", new { id = l.LoanApplicationId });
+                                    break;
+                                case ReverseSpectre.Models.LoanStatusType.CreditRisk:
+                                    @Html.ActionLink("Create a Proposal", "CreatingProposal", new { id = l.LoanApplicationId });
+                                    break;
+                                case ReverseSpectre.Models.LoanStatusType.CreatingProposal:
+                                    @Html.ActionLink("Analyze Proposal", "AnalyzingProposal", new { id = l.LoanApplicationId });
+                                    break;
+                                case ReverseSpectre.Models.LoanStatusType.AnalyzingProposal:
+                                    @Html.ActionLink("Approve", "ApprovedLoan", new { id = l.LoanApplicationId });
+                                    break;
+                                case ReverseSpectre.Models.LoanStatusType.Approved:
+                                    break;
+                            }
+                        }
+                    </td>
+                    <td style="text-align:right;">@Html.ActionLink("View Loan", "Details", new { id = l.LoanApplicationId })</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
