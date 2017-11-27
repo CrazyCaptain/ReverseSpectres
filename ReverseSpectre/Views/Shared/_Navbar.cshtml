@@ -15,11 +15,12 @@
                     if (User.IsInRole("Client"))
                     {
                         <li>@Html.ActionLink("Profile", "Index", "ClientProfile")</li>
-                        <li>@Html.ActionLink("Loans", "Index", "ClientLoan")</li>
+                        <li>@Html.ActionLink("Loan", "Index", "ClientLoan")</li>
                     }
                     else if (User.IsInRole("RelationshipManager"))
                     {
-                        <li></li>
+                        <li>@Html.ActionLink("Dashboard", "Index", "RelationshipManagerDashboard")</li>
+                        <li>@Html.ActionLink("Clients", "Index", "RelationshipManagerClient")</li>
                     }
                 }
             </ul>

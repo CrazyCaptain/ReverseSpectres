@@ -182,7 +182,7 @@ namespace ReverseSpectre.Controllers
 
                         // Create loan entry
                         LoanApplication application = new LoanApplication(invitation, client);
-                        db.LoanApplication.Add(application);
+                        db.LoanApplications.Add(application);
 
                         // Create loan requirements entries
                         db.LoanApplicationDocuments.AddRange(Helper.LoanRequirements.GetBasicLoanRequirements(application));

@@ -20,7 +20,7 @@ namespace ReverseSpectre.Controllers
 
         public ActionResult Index()
         {
-            var model = db.LoanApplication.First(m => m.Client.User.UserName == User.Identity.Name);
+            var model = db.LoanApplications.First(m => m.Client.User.UserName == User.Identity.Name);
 
             return View(model);
         }
@@ -33,7 +33,7 @@ namespace ReverseSpectre.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var application = db.LoanApplication.Find(id);
+            var application = db.LoanApplications.Find(id);
             if (application == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

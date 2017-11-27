@@ -12,7 +12,6 @@ namespace ReverseSpectre.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(ReverseSpectre.Models.ApplicationDbContext context)

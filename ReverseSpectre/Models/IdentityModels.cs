@@ -49,7 +49,7 @@ namespace ReverseSpectre.Models
         public DbSet<ContactInformation> EmploymentInformations { get; set; }
 
         // Loan
-        public DbSet<LoanApplication> LoanApplication { get; set; }
+        public DbSet<LoanApplication> LoanApplications { get; set; }
         public DbSet<LoanApplicationDocument> LoanApplicationDocuments { get; set; }
         public DbSet<LoanApplicationDocumentFile> LoanApplicationDocumentFiles { get; set; }
 

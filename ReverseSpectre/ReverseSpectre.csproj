@@ -243,6 +243,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RelationshipManager\RelationshipManagerDashboardController.cs" />
     <Compile Include="Controllers\RelationshipManager\RelationshipManagerClientController.cs" />
+    <Compile Include="Controllers\SalesDirector\SalesDirectorDashboardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -400,6 +401,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Client\" />
     <Folder Include="Views\RelationshipManagerDashboard\" />
+    <Folder Include="Views\SalesDirectorDashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
