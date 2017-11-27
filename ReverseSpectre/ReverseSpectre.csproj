@@ -300,6 +300,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankModels.cs" />
     <Compile Include="Models\BankViewModels.cs" />
+    <Compile Include="Models\DashboardViewModels.cs" />
     <Compile Include="Models\EmailViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoanModels.cs" />

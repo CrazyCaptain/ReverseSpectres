@@ -14,6 +14,8 @@ namespace ReverseSpectre.Models
     {
         public int BankId { get; set; }
         public string BranchName { get; set; }
+
+        public virtual List<BusinessManager> BusinessManagers { get; set; }
     }
 
     public class BusinessManager
@@ -93,6 +95,7 @@ namespace ReverseSpectre.Models
         public virtual AccountingOfficer AccountingOfficer { get; set; }
 
         public virtual List<ContactInformation> ContactInformation { get; set; }
+        public virtual List<LoanApplication> LoanApplications { get; set; }
     }
 
     public class ContactInformation
