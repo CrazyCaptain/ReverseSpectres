@@ -81,7 +81,8 @@ namespace ReverseSpectre.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Redirect");
+                    //return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -458,6 +459,24 @@ namespace ReverseSpectre.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        public ActionResult Redirect()
+        {
+            if (User.IsInRole("Client"))
+            {
+                return RedirectToAction("Index", "ClientLoan");
+            }
+            else if (User.IsInRole("RelationshipManager"))
+            {
+                return RedirectToAction("Index", "RelationshipManagerClient");
+            }
+            else if (User.IsInRole("AccountingOfficer"))
+            {
+                return RedirectToAction("Index", "CombankLoan");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         #region Helpers
