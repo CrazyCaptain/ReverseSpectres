@@ -27,7 +27,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }else
                 {
-                    var loans = db.LoanApplication.Where(l => l.ClientId == id);
+                    var loans = db.LoanApplications.Where(l => l.ClientId == id);
                     return View(loans);
                 }
 
@@ -35,7 +35,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
             {
                 // if no client id provided
 
-                var loans = db.LoanApplication.ToList();
+                var loans = db.LoanApplications.ToList();
                 return View(loans);
             }
         }
@@ -43,7 +43,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         [Route("{id}/details")]
         public ActionResult Details(int id)
         {
-            LoanApplication loan = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication loan = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if(loan == null)
             {
@@ -59,7 +59,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         [Route("{id}/add/requirement")]
         public ActionResult AddRequirement(int id)
         {
-            LoanApplication loan = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication loan = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if (loan == null)
             {
@@ -169,7 +169,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
             //Credit Investigation
         public ActionResult CreditInvestigation(int id)
         {
-            LoanApplication la = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if (la == null)
             {
@@ -186,7 +186,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         //Trade Checking
         public ActionResult TradeChecking(int id)
         {
-            LoanApplication la = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if (la == null)
             {
@@ -203,7 +203,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         //Credit Risk
         public ActionResult CreditRisk(int id)
         {
-            LoanApplication la = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if (la == null)
             {
@@ -220,7 +220,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         //Creating Proposal
         public ActionResult CreatingProposal(int id)
         {
-            LoanApplication la = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if (la == null)
             {
@@ -237,7 +237,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         //Analyzing Proposal
         public ActionResult AnalyzingProposal(int id)
         {
-            LoanApplication la = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if (la == null)
             {
@@ -254,7 +254,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         //Approve Loan
         public ActionResult ApprovedLoan(int id)
         {
-            LoanApplication la = db.LoanApplication.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
 
             if (la == null)
             {

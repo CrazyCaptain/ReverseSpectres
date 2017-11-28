@@ -145,6 +145,8 @@ namespace ReverseSpectre.Models
         public ClientInvitation() { }
         public ClientInvitation(ClientInvitationViewModel invitation, RelationshipManager rm)
         {
+            Amount = invitation.Amount;
+            Term = invitation.Term;
             Email = invitation.Email;
             BusinessName = invitation.BusinessName;
             FormOfBusiness = invitation.FormOfBusiness;
