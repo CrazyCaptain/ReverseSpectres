@@ -87,7 +87,7 @@ namespace ReverseSpectre.Models
         public bool IsFemale { get; set; }
         public string Position { get; set; }
         public string Email { get; set; }
-        [DisplayName("MobileNumber")]
+        [DisplayName("Mobile Number")]
         public string MobileNumber { get; set; }
     }
 }

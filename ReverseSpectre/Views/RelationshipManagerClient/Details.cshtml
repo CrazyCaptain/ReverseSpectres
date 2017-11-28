@@ -3,9 +3,34 @@
     ViewBag.Title = "LoanDetails";
 }
 
-<h3>Loan Details</h3>
+<h3>@Model.Client.BusinessName: Loan Details</h3>
+@*<h4>Loan Details</h4>*@
+<p>
+    @Html.ActionLink("Go back", "Index")
+</p>
 
-<h4>@Model.Client.BusinessName's Loan</h4>
+<center>
+    <div class="" style="width:400px;max-width:100%;padding:10px;margin-top:20px;">
+
+        <center>
+            <p>Progress</p>
+        </center>
+        <progress style="width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
+        <br /><br />
+        <p><strong>Status:</strong> @Model.LoanStatus</p>
+        <p>-- Description for current status --</p>
+
+    </div>
+</center>
+
+<div class="row">
+    <center>
+        <span><strong>Amount:</strong> P @(String.Format("{0:0,0}", Model.Amount))</span>
+        <span style="margin-left:20px;"><strong>Term:</strong> @Model.Term months</span>
+    </center>
+</div>
+
+<br /><br />
 
 <table class="table">
     <tbody>
@@ -26,6 +51,4 @@
         }
     </tbody>
 </table>
-
-@Html.ActionLink("Go Back", "Index");
 

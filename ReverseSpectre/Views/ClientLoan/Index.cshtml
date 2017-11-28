@@ -16,13 +16,14 @@
         <progress style="width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
         <br /><br />
         <p><strong>Status:</strong> @Model.LoanStatus</p>
+        <p>-- Description for current status --</p>
 
     </div>
 </center>
 
 <div class="row">
         <center>
-            <span><strong>Amount:</strong> P @Model.Amount</span>
+            <span><strong>Amount:</strong> P @(String.Format("{0:0,0}", Model.Amount))</span>
             <span style="margin-left:20px;"><strong>Term:</strong> @Model.Term months</span>
         </center>
 </div>

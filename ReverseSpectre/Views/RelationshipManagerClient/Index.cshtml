@@ -3,12 +3,30 @@
     ViewBag.Title = "Clients";
 }
 
-<h3>Clients</h3>
+<h3>Clients <a class="btn btn-default" href="@Url.Action("Add")">Add Client</a></h3>
 
 
-<p>@Html.ActionLink("Add Client", "Add")</p>
+<p></p>
 
-<table class="table">
+@using (Html.BeginForm("Index", "RelationshipManagerClient", FormMethod.Get, new { @class = "form-inline", style = "display:inline;" }))
+{
+    <input class="form-control" style="display:inline-block;" name="s" placeholder="Client..." /> <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+}
+
+<br /><br />
+
+<ul class="list-unstyled">
+    @foreach (var item in Model)
+    {
+        <li>
+            <div>
+                <p>@item.Client.BusinessName</p>
+            </div>
+        </li>
+    }
+</ul>
+
+@*<table class="table">
     <tbody>
         <tr>
             <th>Name</th>
@@ -29,5 +47,12 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@
 
+@section Styles {
+<style>
+
+
+
+</style>
+}

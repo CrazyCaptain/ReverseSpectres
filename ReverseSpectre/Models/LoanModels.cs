@@ -95,7 +95,7 @@ namespace ReverseSpectre.Models
         CreatingProposal = 4,
         [Display(Name = "Analyzing Proposal")]
         AnalyzingProposal = 5,
-        [Display(Name = "Approve Loan")]
+        [Display(Name = "Approved Loan")]
         Approved = 6,
     }
 
