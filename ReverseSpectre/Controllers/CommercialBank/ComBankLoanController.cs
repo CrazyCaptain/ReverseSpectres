@@ -101,6 +101,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            lad.Comment = string.Empty;
             lad.Status = LoanDocumentStatusType.Approved;
             db.Entry(lad).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
