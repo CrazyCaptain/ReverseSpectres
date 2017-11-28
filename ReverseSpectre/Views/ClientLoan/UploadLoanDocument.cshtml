@@ -1,0 +1,50 @@
+﻿@model ReverseSpectre.Models.LoanApplicationDocumentFileViewModel
+@{ 
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("UploadLoanDocument",
+                null,
+                new AjaxOptions()
+                {
+                    UpdateTargetId = "document-list",
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    OnBegin = "hideSubmit",
+                    //OnSuccess = "hideSpinner",
+                    //OnFailure = "alertFailure",
+                    OnComplete = "hideModal"
+                },
+                new { id = "upload-form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.LoanApplicationDocumentId)
+    <div class="modal-body">
+        <div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="File" class="btn btn-default">Upload File</label>
+                    <input id="File" name="File" type="file" style="display:none" required />
+                    <span id="file-name" style="margin-left:10px;">File name</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="modal-footer text-center">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="upload-submit-button" type="submit" class="btn btn-primary">Upload</button>
+    </div>
+
+    <script>
+        function hideSubmit() {
+            $('#upload-submit-button').attr('disabled', 'disabled');
+        }
+
+        $('#File').on('change', function () {
+            $('#file-name').text($('#File').val().split('\\').pop());
+        });
+    </script>
+}

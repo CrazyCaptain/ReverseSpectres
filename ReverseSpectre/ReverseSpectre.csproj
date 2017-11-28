@@ -404,6 +404,8 @@
     <Content Include="Views\ComBankLoan\AddRequirement.cshtml" />
     <Content Include="Views\ComBankLoan\ReviseRequirement.cshtml" />
     <Content Include="Views\ComBankLoan\CommentFile.cshtml" />
+    <Content Include="Views\ClientLoan\DocumentList.cshtml" />
+    <Content Include="Views\ClientLoan\UploadLoanDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

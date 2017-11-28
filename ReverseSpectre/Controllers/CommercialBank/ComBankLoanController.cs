@@ -287,6 +287,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
             return View();
         }
 
+        [HttpPost]
         public ActionResult CommentFile(int? id, string comment)
         {
             if (id == null)
@@ -312,7 +313,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
             // Save entry
             db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = file.LoanApplicationDocumentId });
+            return RedirectToAction("Details", new { id = file.LoanApplicationDocument.LoanApplicationId });
         }
 
     }

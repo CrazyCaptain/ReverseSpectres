@@ -21,6 +21,8 @@ namespace ReverseSpectre.Controllers
         public ActionResult Index()
         {
             var model = db.LoanApplications.FirstOrDefault(m => m.Client.User.UserName == User.Identity.Name);
+            var documents = db.LoanApplicationDocuments.Include("Files").Where(m => m.LoanApplicationId == model.LoanApplicationId).ToList();
+            model.LoanApplicationDocuments = documents;
 
             return View(model);
         }
@@ -47,6 +49,74 @@ namespace ReverseSpectre.Controllers
             application.LoanApplicationDocuments = documents;
 
             return View(application);
+        }
+
+        [Route("application/document/upload")]
+        public ActionResult UploadLoanDocument(int? id)
+        {
+            // Validation
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var document = db.LoanApplicationDocuments.Find(id);
+            if (document == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else if (document.LoanApplication.Client.User.UserName != User.Identity.Name)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return View(new LoanApplicationDocumentFileViewModel() { Name = document.Name, LoanApplicationDocumentId = document.LoanApplicationDocumentId });
+        }
+
+        [Route("application/document/upload")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UploadLoanDocument(LoanApplicationDocumentFileViewModel model)
+        {
+            // Validation
+            var document = db.LoanApplicationDocuments.Find(model.LoanApplicationDocumentId);
+            if (document == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else if (document.LoanApplication.Client.User.UserName != User.Identity.Name)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Get storage strings
+                string storageConnectionString = ConfigurationManager.AppSettings["StorageConnectionString"];
+                string containerName = ConfigurationManager.AppSettings["LoanApplicationDocumentsContainerName"];
+                string fileType = Path.GetExtension(model.File.FileName);
+                string fileName = $"{document.Name.Replace(" ", string.Empty)}{DateTime.Now.ToString("yyyyMMddHHmmss")}{document.LoanApplicationDocumentId}{fileType}";
+
+                // Upload to storage
+                string url = await Helper.StorageHelper.UploadToStorage(storageConnectionString, containerName, model.File.InputStream, fileName);
+
+                var documentFile = new LoanApplicationDocumentFile()
+                {
+                    LoanApplicationDocumentId = model.LoanApplicationDocumentId,
+                    FileType = fileType,
+                    Url = url,
+                    TimestampCreated = DateTime.Now
+                };
+
+                // Add entry
+                db.LoanApplicationDocumentFiles.Add(documentFile);
+
+                // Save entry
+                await db.SaveChangesAsync();
+
+                //return RedirectToAction("LoanApplication", new { id = document.LoanApplicationId });
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         [Route("application/document/{id}")]
@@ -111,7 +181,8 @@ namespace ReverseSpectre.Controllers
                 // Save entry
                 await db.SaveChangesAsync();
 
-                return RedirectToAction("LoanApplication", new { id = document.LoanApplicationId });
+                //return RedirectToAction("LoanApplication", new { id = document.LoanApplicationId });
+                return RedirectToAction("Index");
             }
             return View();
         }

@@ -22,6 +22,10 @@
                         <li>@Html.ActionLink("Dashboard", "Index", "RelationshipManagerDashboard")</li>
                         <li>@Html.ActionLink("Clients", "Index", "RelationshipManagerClient")</li>
                     }
+                    else if (User.IsInRole("AccountingOfficer"))
+                    {
+                        <li>@Html.ActionLink("Clients", "Index", "CombankLoan")</li>
+                    }
                 }
             </ul>
             

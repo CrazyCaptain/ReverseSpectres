@@ -36,9 +36,9 @@
                 <tr>
                     <td><a href="@file.Url" target="_blank">Download</a></td>
                     <td>@file.TimestampCreated.ToString()</td>
+                    <td>@file.Comment</td>
                     <td>@file.FileType.Substring(1)</td>
-                    <td></td>
-                    <td>@Html.ActionLink("Comment on File", "CommentFile", new { id = file.LoanApplicationDocumentFileId }, new { @class = "btn btn-xs" })</td>
+                    <td>@Html.ActionLink("Comment on File", "CommentFile", new { id = file.LoanApplicationDocumentFileId }, new { @class = "btn btn-xs btn-default" })</td>
                 </tr>
             }
         }

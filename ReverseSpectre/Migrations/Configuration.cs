@@ -136,6 +136,12 @@ namespace ReverseSpectre.Migrations
                     UserId = user.Id
                 });
             }
+
+            var ao = userManager.FindByEmail("reversehack_ao@mailinator.com");
+            if (!userManager.IsInRole(ao.Id, "AccountingOfficer"))
+            {
+                userManager.AddToRole(ao.Id, "AccountingOfficer");
+            }
         }
     }
 }

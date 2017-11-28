@@ -2,10 +2,67 @@
 
 @{
     ViewBag.Title = "Loan Application";
+    int approved = Model.LoanApplicationDocuments.Count(m => m.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved);
+    int max = Model.LoanApplicationDocuments.Count;
 }
 
 <h3>Loan Application</h3>
+<center>
+    <div class="" style="width:400px;max-width:100%;padding:10px;margin-top:20px;">
 
-@Html.ActionLink("Details", "LoanApplication", new { id = Model.LoanApplicationId })
+        <center>
+            <p>Progress</p>
+        </center>
+        <progress style="width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
+        <br /><br />
+        <p><strong>Status:</strong> @Model.LoanStatus</p>
 
+    </div>
+</center>
 
+<div class="row">
+        <center>
+            <span><strong>Amount:</strong> P @Model.Amount</span>
+            <span style="margin-left:20px;"><strong>Term:</strong> @Model.Term months</span>
+        </center>
+</div>
+
+<div id="document-list">
+    @Html.Partial("DocumentList", Model.LoanApplicationDocuments)
+</div>
+
+<!-- Upload Modal -->
+<div id="upload-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Document</h4>
+            </div>
+            <div id="upload-modal-content">
+                <div class="loader">
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+
+    function openEditModal(id) {
+        $('#upload-modal').modal('show');
+        $.get("@Url.Action("UploadLoanDocument", "ClientLoan")",
+            { id: id },
+            function (data) { $('#upload-modal-content').html(data); });
+    }
+
+    function hideModal() {
+        $('#upload-modal').modal('hide');
+    }
+</script>    
+}
