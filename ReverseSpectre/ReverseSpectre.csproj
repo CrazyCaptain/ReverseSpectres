@@ -396,11 +396,11 @@
     <Content Include="Views\ComBankLoan\Details.cshtml" />
     <Content Include="Views\ComBankLoan\AddRequirement.cshtml" />
     <Content Include="Views\ComBankLoan\ReviseRequirement.cshtml" />
+    <Content Include="Views\RelationshipManagerDashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Client\" />
-    <Folder Include="Views\RelationshipManagerDashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

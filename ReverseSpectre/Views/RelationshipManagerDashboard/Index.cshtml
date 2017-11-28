@@ -1,0 +1,36 @@
+﻿@model List<ReverseSpectre.Models.LoanApplication>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Dashboard</h3>
+<hr/>
+
+Number of Pending Loans:
+@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.Pending)
+<br/>
+<br />
+Number of Loans on Credit Investigation:
+@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.CreditInvestigation)
+<br />
+<br />
+Number of Loans on Trade Checking:
+@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.TradeChecking)
+<br />
+<br />
+Number of Loans on Credit Risk:
+@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.CreditRisk)
+<br />
+<br />
+Number of Loans on Creating Proposal:
+@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.CreatingProposal)
+<br />
+<br />
+Number of Loans that are being Analyzed:
+@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.AnalyzingProposal)
+<br />
+<br />
+Number of Loans that are Approved:
+@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.Approved)
+<br />
+<br />
