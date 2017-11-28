@@ -22,9 +22,27 @@
             <tr style="background:#f2f2f2;">
                 <td>@document.Name</td>
                 <td>@document.TimestampCreated.ToString()</td>
-                <td>@document.Comment</td>
+                <td>
+                @if (document.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved)
+                {
+                    @document.Comment = " ";
+                }
+                else {
+                    @document.Comment
+                }
+                </td>
                 <td>@document.Status</td>
-                <td>@Html.ActionLink("Upload", "UploadLoanApplicationDocument", new { id = document.LoanApplicationDocumentId })</td>
+                <td>
+                @if (document.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved)
+                {
+                    //do not show the upload button
+                }
+                else
+                {
+                    @Html.ActionLink("Upload", "UploadLoanApplicationDocument", new { id = document.LoanApplicationDocumentId })
+                }
+
+                </td>
             </tr>
             foreach (var file in document.Files)
             {
