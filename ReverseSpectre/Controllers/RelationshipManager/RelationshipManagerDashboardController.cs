@@ -23,7 +23,6 @@ namespace ReverseSpectre.Controllers
             var loans = db.LoanApplication.Where(m => m.Client.RelationshipManagerId == rm.RelationshipManagerId).ToList();
 
             return View(loans);
-            return View();
         }
     }
 }

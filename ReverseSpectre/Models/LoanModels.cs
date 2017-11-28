@@ -96,6 +96,8 @@ namespace ReverseSpectre.Models
         AnalyzingProposal = 5,
         [Display(Name = "Approve Loan")]
         Approved = 6,
+        [Display(Name = "Deny Loan")]
+        Denied = 7,
     }
 
     public enum LoanDocumentStatusType
