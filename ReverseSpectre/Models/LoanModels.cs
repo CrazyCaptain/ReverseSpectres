@@ -57,6 +57,7 @@ namespace ReverseSpectre.Models
         public string FileType { get; set; }
         public string Url { get; set; }
         public DateTime TimestampCreated { get; set; }
+        public string Comment { get; set; }
 
         public int LoanApplicationDocumentId { get; set; }
         public virtual LoanApplicationDocument LoanApplicationDocument { get; set; }

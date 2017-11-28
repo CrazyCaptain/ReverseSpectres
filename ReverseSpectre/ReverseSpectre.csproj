@@ -297,6 +297,10 @@
     <Compile Include="Migrations\201711240549059_added_AccountingOfficer.Designer.cs">
       <DependentUpon>201711240549059_added_AccountingOfficer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711280303462_added_comment_to_documentfile.cs" />
+    <Compile Include="Migrations\201711280303462_added_comment_to_documentfile.Designer.cs">
+      <DependentUpon>201711280303462_added_comment_to_documentfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankModels.cs" />
@@ -399,6 +403,7 @@
     <Content Include="Views\ComBankLoan\Details.cshtml" />
     <Content Include="Views\ComBankLoan\AddRequirement.cshtml" />
     <Content Include="Views\ComBankLoan\ReviseRequirement.cshtml" />
+    <Content Include="Views\ComBankLoan\CommentFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -453,6 +458,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711240549059_added_AccountingOfficer.resx">
       <DependentUpon>201711240549059_added_AccountingOfficer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711280303462_added_comment_to_documentfile.resx">
+      <DependentUpon>201711280303462_added_comment_to_documentfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

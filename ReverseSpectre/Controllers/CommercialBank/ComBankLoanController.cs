@@ -10,6 +10,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
 {
     [RoutePrefix("combank/loans")]
     [Route("{action=index}")]
+    [Authorize(Roles = "AccountingOfficer")]
     public class ComBankLoanController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -268,6 +269,50 @@ namespace ReverseSpectre.Controllers.CommercialBank
             return RedirectToAction("Index", "ComBankLoan");
         }
         
+        public ActionResult CommentFile(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var file = db.LoanApplicationDocumentFiles.Find(id);
+            if (file == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ViewBag.Id = file.LoanApplicationDocumentFileId;
+            ViewBag.LoanId = file.LoanApplicationDocumentId;
+            return View();
+        }
+
+        public ActionResult CommentFile(int? id, string comment)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var file = db.LoanApplicationDocumentFiles.Find(id);
+            if (file == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (string.IsNullOrEmpty(comment))
+            {
+                ViewBag.Id = id;
+                ViewBag.LoanId = file.LoanApplicationDocumentId;
+                return View();
+            }
+
+            // Edit entry
+            file.Comment = comment;
+            db.Entry(file).State = System.Data.Entity.EntityState.Modified;
+
+            // Save entry
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = file.LoanApplicationDocumentId });
+        }
 
     }
 }
