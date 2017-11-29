@@ -269,7 +269,24 @@ namespace ReverseSpectre.Controllers.CommercialBank
 
             return RedirectToAction("Index", "ComBankLoan");
         }
-        
+
+        //Deny Loan
+        public ActionResult DeniedLoan(int id)
+        {
+            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
+
+            if (la == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            la.LoanStatus = LoanStatusType.Denied;
+            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "ComBankLoan");
+        }
+
         public ActionResult CommentFile(int? id)
         {
             if (id == null)
