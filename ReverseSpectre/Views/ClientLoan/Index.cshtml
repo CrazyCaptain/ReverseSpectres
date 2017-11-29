@@ -12,6 +12,8 @@
     {
         interest = $"{(Model.Interest * 100)} %";
     }
+
+    var stage = EnumHelper<ReverseSpectre.Models.LoanStatusType>.GetDisplayValue(Model.LoanStatus);
 }
 
 <h3>Loan Application</h3>
@@ -19,7 +21,7 @@
     <span><strong>Progress: </strong></span>
     <progress style="min-width:300px; max-width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
     <br /><br />
-    <p><strong>Stage:</strong> @Model.LoanStatus</p>
+    <p><strong>Stage:</strong> @stage</p>
     <p>-- Description for current status --</p>
 
     <hr />

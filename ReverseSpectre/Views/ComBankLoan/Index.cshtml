@@ -25,7 +25,7 @@
         }
         else
         {
-            foreach (var l in Model)
+            foreach (var l in Model.OrderByDescending(m => m.TimestampCreated))
             {
                 <tr>
                     <td>@l.Client.BusinessName</td>

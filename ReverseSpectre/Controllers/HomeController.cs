@@ -10,7 +10,8 @@ namespace ReverseSpectre.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login", "Account");
+            //return View();
         }
 
         public ActionResult About()

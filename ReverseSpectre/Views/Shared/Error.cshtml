@@ -4,6 +4,19 @@
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
+<div class="container">
+    <div class="text-center jumbotron container">
+        <h2>Err, some bad computer stuff happened.</h2>
+        <h3>Don't worry, it's not a BPI error.</h3>
+        @*<h2>Some monkey just threw a wrench at our servers.</h2>
+            <h3>Just give us a minute to 'physically' persuade our hardware to work.</h3>*@
+        <br />
+        <h1>(ノ゜Д゜)ノ ︵ ┻━┻</h1>
+        <br />
+        <h3>If you want it to be fixed faster, drop us a line.</h3>
+        <h5>And tell us what happened.</h5>
+        @*<a href="mailto:ahmed@spectres.solutions?subject=Error Encountered">ahmed@spectres.solutions</a>*@
+        <br />
+        @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-default" })
+    </div>
+</div>

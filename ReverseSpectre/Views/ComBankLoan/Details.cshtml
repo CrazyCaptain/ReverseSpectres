@@ -32,14 +32,21 @@
             <p><strong>Term:</strong> @Model.Term months</p>
         </div>
         <div class="row">
-            <span style="display:inline-block;">
-                <strong>Interest Rate:</strong> 
-                @using (Html.BeginForm("EditInterest", "ComBankLoan", FormMethod.Post, new { style = "display:inline;" })) {
+            <div style="display:inline-block;">
+                <div style="margin-bottom:6px;">
+                    <span style="width:100px;">
+                        <strong style="margin-right:20px;">Interest Rate</strong>
+                    </span>
+                    <span>
+                        <i><small>* interest rate is in decimal</small></i>
+                    </span>
+                </div>
+                @using (Html.BeginForm("EditInterest", "ComBankLoan", FormMethod.Post)) {
                     @Html.Hidden("id", Model.LoanApplicationId)
-                    <input class="form-control" style="display:inline-block;width:100px;" name="interest" id="Interest" placeholder="0.0125" required value="@((Model.Interest == 0) ? "" : Model.Interest.ToString())"/>
-                    <button class="btn btn-primary">Update</button>
+                    <input class="form-control" style="display:inline-block;width:100px;margin-right:20px;text-align:right;" name="interest" id="Interest" placeholder="0.0125" required value="@((Model.Interest == 0) ? "" : Model.Interest.ToString())"/>
+                    <button class="btn btn-primary" style="float:right;">Update</button>
                 }
-            </span>
+            </div>
         </div>
     </div>
 
