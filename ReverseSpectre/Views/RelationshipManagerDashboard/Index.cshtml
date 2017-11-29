@@ -3,34 +3,193 @@
     ViewBag.Title = "Index";
 }
 
+<script src="~/Content/Chart.bundle.js"></script>
+<script src="~/Content/utils.js"></script>
+
 <h3>Dashboard</h3>
 <hr/>
 
-Number of Pending Loans:
-@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.Pending)
-<br/>
-<br />
-Number of Loans on Credit Investigation:
-@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.CreditInvestigation)
-<br />
-<br />
-Number of Loans on Trade Checking:
-@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.TradeChecking)
-<br />
-<br />
-Number of Loans on Credit Risk:
-@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.CreditRisk)
-<br />
-<br />
-Number of Loans on Creating Proposal:
-@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.CreatingProposal)
-<br />
-<br />
-Number of Loans that are being Analyzed:
-@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.AnalyzingProposal)
-<br />
-<br />
-Number of Loans that are Approved:
-@Model.Count(a => a.LoanStatus == ReverseSpectre.Models.LoanStatusType.Approved)
-<br />
-<br />
+<div style="width:75%;">
+    <canvas id="canvas"></canvas>
+</div>
+
+@{var listItems = new List<int>();
+    var lastYear = Model.Last().TimestampCreated.Year;
+    var firstYear = Model.First().TimestampCreated.Year;
+    for (int i = lastYear; i >= firstYear; i--)
+    {
+        listItems.Add(i);
+    }
+}
+@Html.DropDownList("showYear", new SelectList(listItems), new { @onchange = "ChangeYear(this.value)"})
+
+@Html.CheckBox("showApproved", true, new { @onclick = "ShowApproved(this.checked)" }) @Html.Label("showApproved", "Approved")
+@Html.CheckBox("showPending", true, new { @onclick = "ShowPending(this.checked)" }) @Html.Label("showPending", "Pending")
+@Html.CheckBox("showDenied", true, new { @onclick = "ShowDenied(this.checked)" }) @Html.Label("showDenied", "Denied")
+
+@* Charts *@
+
+<script>
+    var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function ShowApproved(show)
+    {
+        LoadData(MONTHS)
+    }
+
+    function ShowPending(show) {
+        LoadData(MONTHS)
+    }
+
+    function ShowDenied(show) {
+        LoadData(MONTHS)
+    }
+
+    function ChangeYear(val) {
+        LoadData(MONTHS);
+        /*if (val == TODAY.getFullYear())
+        {
+            var month = TODAY.getMonth();
+            var filteredMonths[];
+            var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            for (i = 0; i < month; i++)
+            {
+                filteredMonths.push(MONTHS[i]);
+            }
+            LoadData(filteredMonths);
+        }
+        else
+        {
+            var MONTHS2 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            LoadData(MONTHS2);
+        }*/
+    }
+
+    function LoadDataSets() {
+        if (window.myLine != null)
+        {
+            window.myLine.destroy();
+        }
+
+        var datasets = [];
+
+        var year = [document.getElementById("showYear").value];
+
+        var loanApplications = [];
+        @foreach (var l in Model)
+        {
+            @:loanApplications.push({
+                @:year: '@l.TimestampCreated.Year',
+                @:month: '@l.TimestampCreated.Month',
+                @:status: '@l.LoanStatus'
+            @:});
+        }
+
+        var isShowApproved = document.getElementById("showApproved").checked;
+        if (isShowApproved) {
+            var approvedData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            for (i = 0; i < loanApplications.length; i++) {
+                if (loanApplications[i].year == year && loanApplications[i].status == "Approved")
+                {
+                    approvedData[loanApplications[i].month - 1]++;
+                }
+            }
+
+            datasets.push({
+                label: "Approved",
+                backgroundColor: window.chartColors.green,
+                borderColor: window.chartColors.green,
+                data: approvedData,
+                fill: false,
+            });
+        }
+
+        var isShowPending = document.getElementById("showPending").checked;
+        if (isShowPending) {
+            var pendingData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            for (i = 0; i < loanApplications.length; i++) {
+                if (loanApplications[i].year == year && loanApplications[i].status != "Approved" &&  loanApplications[i].status != "Denied") {
+                    pendingData[loanApplications[i].month - 1]++;
+                }
+            }
+
+            datasets.push({
+                label: "Pending",
+                backgroundColor: window.chartColors.purple,
+                borderColor: window.chartColors.purple,
+                data: pendingData,
+                fill: false,
+            });
+        }
+
+        var isShowDenied = document.getElementById("showDenied").checked;
+        if (isShowDenied) {
+            var deniedData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            for (i = 0; i < loanApplications.length; i++) {
+                if (loanApplications[i].year == year && loanApplications[i].status == "Denied") {
+                    deniedData[loanApplications[i].month - 1]++;
+                }
+            }
+
+            datasets.push({
+                label: "Denied",
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                data: deniedData,
+                fill: false,
+            });
+        }
+
+        return datasets;
+    }
+
+    function LoadData(months) {
+
+        var datasets = LoadDataSets();
+        var config = {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Approved Loans'
+                        }
+                    }]
+                }
+            }
+        };
+
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    }
+
+    var TODAY = new Date();
+    ChangeYear(TODAY.getFullYear());
+
+</script>

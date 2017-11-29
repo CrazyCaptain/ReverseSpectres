@@ -15,6 +15,7 @@
             <th>Date Created</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -67,6 +68,7 @@
                             }
                         }
                     </td>
+                    <td>@Html.ActionLink("Deny", "DeniedLoan", new { id = l.LoanApplicationId })</td>
                     <td style="text-align:right;">@Html.ActionLink("View Loan", "Details", new { id = l.LoanApplicationId })</td>
                 </tr>
             }
