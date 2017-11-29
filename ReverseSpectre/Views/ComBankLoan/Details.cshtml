@@ -1,46 +1,234 @@
 ﻿@model ReverseSpectre.Models.LoanApplication
 @{
     ViewBag.Title = "LoanApplication";
+    string interest;
+    if (Model.Interest <= 0)
+    {
+        interest = "- To be determined -";
+    }
+    else
+    {
+        interest = $"{(Model.Interest * 100)} %";
+    }
 }
 
-<h3>Loan # @Model.LoanApplicationId</h3>
-<h5>Client: @Model.Client.User.Email</h5>
-<h4>@Html.ActionLink("Add Requirement", "AddRequirement", new { id = Model.LoanApplicationId })</h4>
+<h3>@Model.Client.BusinessName</h3>
+@*<h5>@(Model.Client.User.LastName), @Model.Client.User.FirstName @Model.Client.User.MiddleName</h5>*@
+<h5>@Model.Client.User.Email</h5>
 
-<table class="table">
-    <tbody>
-        <tr>
-            <th>Document</th>
-            <th>Added on</th>
-            <th>Comment</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
+<div class="container" style="margin-top:30px;">
+    <span><strong>Progress: </strong></span>
+    <progress id="status-progress" style="min-width:300px; max-width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
+    <br /><br />
+    <p><strong>Stage:</strong> @Html.EnumDropDownListFor(m => m.LoanStatus, new { @class = "form-control", style = "display:inline-block; margin-left:10px;" })</p>
 
-        @foreach (var document in Model.LoanApplicationDocuments)
-        {
-            <tr style="background:#f2f2f2;">
-                <td>@document.Name</td>
-                <td>@document.TimestampCreated.ToString()</td>
-                <td>@document.Comment</td>
-                <td>@document.Status</td>
-                <td style="text-align:right;">
-                    @Html.ActionLink("Approve", "Approve", new { id = document.LoanApplicationDocumentId }, new { @class="btn btn-xs btn-success" })
-                    @Html.ActionLink("Request Revision", "ReviseRequirement", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-warning" })
-                    @Html.ActionLink("Deny", "Deny", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-danger" })
-                </td>
-            </tr>
+    <hr />
 
-            foreach (var file in document.Files)
-            {
-                <tr>
-                    <td><a href="@file.Url" target="_blank">Download</a></td>
-                    <td>@file.TimestampCreated.ToString()</td>
-                    <td>@file.Comment</td>
-                    <td>@file.FileType.Substring(1)</td>
-                    <td>@Html.ActionLink("Comment on File", "CommentFile", new { id = file.LoanApplicationDocumentFileId }, new { @class = "btn btn-xs btn-default" })</td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+    <div class="container" style="font-family:Arial, Helvetica, sans-serif;">
+        <div class="row">
+            <p><strong>Amount:</strong> @(String.Format("{0:0,0}", Model.Amount)) PHP</p>
+        </div>
+        <div class="row">
+            <p><strong>Term:</strong> @Model.Term months</p>
+        </div>
+        <div class="row">
+            <p><strong>Interest Rate:</strong> @interest</p>
+        </div>
+    </div>
+
+</div>
+<br /><br />
+
+@*<center>
+
+    <div>
+        <center>
+            <p>Progress</p>
+        </center>
+        <div style="width:400px;max-width:100%;padding:10px;margin-top:20px;">
+            <progress id="status-progress" style="width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
+        </div>
+    <br /><br />
+    <p><strong>Status:</strong> @Html.EnumDropDownListFor(m => m.LoanStatus, new { @class = "form-control", style = "display:inline-block; margin-left:10px;" })</p>
+</div>
+
+</center>
+
+<div class="row">
+    <center>
+        <span><strong>Amount:</strong> P @(String.Format("{0:0,0}", Model.Amount))</span>
+        <span style="margin-left:20px;"><strong>Term:</strong> @Model.Term months</span>
+    </center>
+</div>*@
+
+<h4>Required Documents <button class="btn btn-default" onclick="openRequirementModal()">Add Requirement</button></h4>
+
+<div id="document-list">
+    @Html.Partial("DocumentList", Model.LoanApplicationDocuments)
+</div>
+
+<!-- Preview Modal -->
+<div id="preview-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Document</h4>
+            </div>
+            <div id="preview-modal-content">
+                <div style="padding:10px;">
+                    <img id="preview-image" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Requirements Modal -->
+<div id="requirement-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Document Requirement</h4>
+            </div>
+            <div id="requirement-modal-content">
+                <div class="loader">
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Document Comment Modal -->
+<div id="comment-document-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Document Comment</h4>
+            </div>
+            <div id="comment-document-modal-content">
+                <div class="loader">
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- File Comment Modal -->
+<div id="comment-file-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit File Comment</h4>
+            </div>
+            <div id="comment-file-modal-content">
+                <div class="loader">
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                    <div class="circle">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+<style>
+
+    #preview-image {
+        width:100%;
+    }
+
+    .form-input {
+        width:240px;
+    }
+
+</style>
+}
+
+@section Scripts {
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    function previewImage(url) {
+        $('#preview-image').attr('src', url);
+        $('#preview-modal').modal('show');
+    }
+
+    $('#LoanStatus').on('change', function () {
+        $('#status-progress').val($(this).val());
+
+        $.post("@Url.Action("ChangeStatus")", { id: @Model.LoanApplicationId, statusType: $(this).val() })
+    });
+
+    function openRequirementModal() {
+        $('#requirement-modal').modal('show');
+        $.get("@Url.Action("AddRequirement", "ComBankLoan")",
+            { id: @Model.LoanApplicationId },
+            function (data) { $('#requirement-modal-content').html(data);
+        });
+    }
+
+    function openCommentDocumentModal(id) {
+        $('#comment-document-modal').modal('show');
+        $.get("@Url.Action("ReviseRequirement", "ComBankLoan")",
+            { id: id },
+            function (data) { $('#comment-document-modal-content').html(data);
+        });
+    }
+
+    function openCommentFileModal(id) {
+        $('#comment-file-modal').modal('show');
+        $.get("@Url.Action("CommentFile", "ComBankLoan")",
+            { id: id },
+            function (data) { $('#comment-file-modal-content').html(data);
+        });
+    }
+
+    function hideModal() {
+        $('#comment-document-modal').modal('hide');
+        $('#comment-file-modal').modal('hide');
+        $('#requirement-modal').modal('hide');
+    }
+
+    $('#requirements-modal').on('hidden.bs.modal', function () {
+        var data = $('<div></div>', { class: 'loader' })
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }));
+        $('#requirements-modal-content').html(data);
+    })
+    $('#comment-document-modal').on('hidden.bs.modal', function () {
+        var data = $('<div></div>', { class: 'loader' })
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }));
+        $('#comment-document-modal-content').html(data);
+    })
+    $('#comment-file-modal').on('hidden.bs.modal', function () {
+        var data = $('<div></div>', { class: 'loader' })
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }));
+        $('#comment-file-modal-content').html(data);
+    })
+    $('#-modal').on('hidden.bs.modal', function () {
+        var data = $('<div></div>', { class: 'loader' })
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }))
+            .append($('<div></div>', { class: 'circle', text: ' ' }));
+        $('#-modal-content').html(data);
+    })
+</script>
+}

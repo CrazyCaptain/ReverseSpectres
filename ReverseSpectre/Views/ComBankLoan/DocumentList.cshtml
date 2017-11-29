@@ -1,0 +1,56 @@
+﻿@model List<ReverseSpectre.Models.LoanApplicationDocument>
+@{ 
+    List<string> imageTypes = new List<string>() { "jpg", "png" };
+}
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Added on</th>
+            <th>Comment</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+
+        @foreach (var document in Model)
+        {
+            <tr style="background:#f2f2f2;">
+                <td>@document.Name</td>
+                <td>@document.TimestampCreated.ToString()</td>
+                <td>@document.Comment</td>
+                <td>@document.Status</td>
+                <td style="text-align:right;">
+                    @Html.ActionLink("Approve", "Approve", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-success" })
+                    @*@Html.ActionLink("Request Revision", "ReviseRequirement", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-warning" })*@
+                    <button class="btn btn-xs btn-warning" onclick="openCommentDocumentModal(@document.LoanApplicationDocumentId)">Request Revision</button>
+                    @Html.ActionLink("Deny", "Deny", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-danger" })
+                </td>
+            </tr>
+
+            foreach (var file in document.Files)
+            {
+                string fileType = file.FileType.Substring(1);
+                <tr>
+                    <td><a href="@file.Url" target="_blank">Download</a></td>
+                    <td>@file.TimestampCreated.ToString()</td>
+                    <td>@file.Comment</td>
+                    <td>
+                        @if (imageTypes.Contains(fileType))
+                        {
+                            <button class="btn btn-xs btn-default" onclick="previewImage('@file.Url')">Preview</button>
+                        }
+                        else
+                        {
+                            @file.FileType.Substring(1)
+                        }
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Comment on File", "CommentFile", new { id = file.LoanApplicationDocumentFileId }, new { @class = "btn btn-xs btn-default" })*@
+                        <button class="btn btn-xs btn-default" onclick="openCommentFileModal(@file.LoanApplicationDocumentFileId)">Comment on File</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

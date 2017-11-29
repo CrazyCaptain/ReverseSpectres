@@ -1,41 +1,54 @@
 ﻿@model ReverseSpectre.Models.LoanApplication
 @{
     ViewBag.Title = "LoanDetails";
+    string interest;
+    if ( Model.Interest <= 0)
+    {
+        interest = "- To be determined -";
+    }
+    else
+    {
+        interest = $"{(Model.Interest * 100)} %";
+    }
 }
 
-<h3>@Model.Client.BusinessName: Loan Details</h3>
-@*<h4>Loan Details</h4>*@
 <p>
     @Html.ActionLink("Go back", "Index")
 </p>
+<h3>@Model.Client.BusinessName's Loan Details</h3>
+@*<h4>Loan Details</h4>*@
 
-<center>
-    <div class="" style="width:400px;max-width:100%;padding:10px;margin-top:20px;">
 
-        <center>
-            <p>Progress</p>
-        </center>
-        <progress style="width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
-        <br /><br />
-        <p><strong>Status:</strong> @Model.LoanStatus</p>
-        <p>-- Description for current status --</p>
 
+<div class="container" style="margin-top:30px;">
+    <span><strong>Progress: </strong></span>
+    <progress style="min-width:300px; max-width:100%;" max="6" value="@((int)Model.LoanStatus)"></progress>
+    <br /><br />
+    <p><strong>Stage:</strong> @Model.LoanStatus</p>
+    <p>-- Description for current status --</p>
+
+    <hr />
+
+    <div class="container" style="font-family:Arial, Helvetica, sans-serif;">
+        <div class="row">
+            <p><strong>Amount:</strong> @(String.Format("{0:0,0}", Model.Amount)) PHP</p>
+        </div>
+        <div class="row">
+            <p><strong>Term:</strong> @Model.Term months</p>
+        </div>
+        <div class="row">
+            <p><strong>Interest Rate:</strong> @interest</p>
+        </div>
     </div>
-</center>
 
-<div class="row">
-    <center>
-        <span><strong>Amount:</strong> P @(String.Format("{0:0,0}", Model.Amount))</span>
-        <span style="margin-left:20px;"><strong>Term:</strong> @Model.Term months</span>
-    </center>
 </div>
-
 <br /><br />
 
+<h4>Required Documents</h4>
 <table class="table">
     <tbody>
         <tr>
-            <th>Document</th>
+            <th>Name</th>
             <th>Added on</th>
             <th>Comment</th>
             <th>Status</th>

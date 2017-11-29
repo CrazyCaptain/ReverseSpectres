@@ -1,10 +1,47 @@
 ﻿@model ReverseSpectre.Models.LoanDocumentReviseModel
 
 @{
-    ViewBag.Title = "Revise Requirement";
+    Layout = null;
 }
 
-<h2>Revise Requirement: @Model.Name</h2>
+
+@using (Ajax.BeginForm("ReviseRequirement",
+                        null,
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "document-list",
+                            HttpMethod = "POST",
+                            InsertionMode = InsertionMode.Replace,
+                            //OnBegin = "hideSubmit",
+                            //OnSuccess = "hideSpinner",
+                            //OnFailure = "alertFailure",
+                            OnComplete = "hideModal"
+                        },
+                        new { id = "comment-document-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.LoanApplicationDocumentId)
+    <div class="modal-body">
+        <div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label">Comment</label>
+                    <textarea class="form-input" id="Comment" name="Comment" required style="width:100%;display:block;"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer text-center">
+        @*<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>*@
+        <button id="upload-submit-button" type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+}
+
+@*<h2>Revise Requirement: @Model.Name</h2>
 
 @using (Html.BeginForm())
 {
@@ -35,4 +72,4 @@
 
 <div>
     @Html.ActionLink("Back to Loan", "Details", new { id = Model.LoanApplicationId })
-</div>
+</div>*@

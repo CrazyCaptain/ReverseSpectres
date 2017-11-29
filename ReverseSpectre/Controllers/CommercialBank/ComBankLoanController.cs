@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -57,7 +58,6 @@ namespace ReverseSpectre.Controllers.CommercialBank
             return View(loan);
         }
 
-        [Route("{id}/add/requirement")]
         public ActionResult AddRequirement(int id)
         {
             LoanApplication loan = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
@@ -74,8 +74,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
         }
 
         [HttpPost]
-        [Route("{id}/add/requirement")]
-        public ActionResult AddRequirement([Bind(Include = "LoanApplicationDocumentId,Name,Comment,LoanApplicationId")] LoanApplicationDocument loanApplicationDocument)
+        public ActionResult AddRequirement([Bind(Include = "Name,Comment,LoanApplicationId")] LoanApplicationDocument loanApplicationDocument)
         {
             loanApplicationDocument.Status = LoanDocumentStatusType.Pending;
             loanApplicationDocument.TimestampCreated = DateTime.Now;
@@ -84,14 +83,24 @@ namespace ReverseSpectre.Controllers.CommercialBank
             {
                 db.LoanApplicationDocuments.Add(loanApplicationDocument);
                 db.SaveChanges();
-                return RedirectToAction("Details", new { id=loanApplicationDocument.LoanApplicationId });
+                
+                LoanApplication loan = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == loanApplicationDocument.LoanApplicationId);
+
+                if (loan == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var documents = db.LoanApplicationDocuments.Include("Files").Where(m => m.LoanApplicationId == loan.LoanApplicationId).ToList();
+                loan.LoanApplicationDocuments = documents;
+
+                return PartialView("DocumentList", documents);
             }
 
             return View(loanApplicationDocument);
         }
 
         //Loan Documents
-
         public ActionResult Approve(int id)
         {
             LoanApplicationDocument lad = db.LoanApplicationDocuments.FirstOrDefault(l => l.LoanApplicationDocumentId == id);
@@ -107,47 +116,6 @@ namespace ReverseSpectre.Controllers.CommercialBank
             db.SaveChanges();
 
             return RedirectToAction("Details", new { id = lad.LoanApplicationId });
-        }
-
-        [Route("requirement/{id}/revise")]
-        public ActionResult ReviseRequirement(int id)
-        {
-            LoanApplicationDocument lad = db.LoanApplicationDocuments.FirstOrDefault(l => l.LoanApplicationDocumentId == id);
-
-            if (lad == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            LoanDocumentReviseModel ldrm = new LoanDocumentReviseModel(lad);
-
-            return View(ldrm);
-        }
-
-        [Route("requirement/{id}/revise")]
-        [HttpPost]
-        public ActionResult Revise(LoanDocumentReviseModel ldrm)
-        {
-            if (ModelState.IsValid)
-            {
-                LoanApplicationDocument lad = db.LoanApplicationDocuments
-                    .FirstOrDefault(l => l.LoanApplicationDocumentId == ldrm.LoanApplicationDocumentId);
-
-                if (lad == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                lad.Status = LoanDocumentStatusType.Revision;
-                lad.Comment = ldrm.Comment;
-
-                db.Entry(lad).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-
-                return RedirectToAction("Details", new { id = lad.LoanApplicationId });
-            }
-
-            return View(ldrm);
         }
 
         public ActionResult Deny(int id)
@@ -166,125 +134,57 @@ namespace ReverseSpectre.Controllers.CommercialBank
             return RedirectToAction("Details", new { id = lad.LoanApplicationId });
         }
 
-        //Loan Status
-
-            //Credit Investigation
-        public ActionResult CreditInvestigation(int id)
+        //[Route("requirement/{id}/revise")]
+        public ActionResult ReviseRequirement(int id)
         {
-            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
+            LoanApplicationDocument lad = db.LoanApplicationDocuments.FirstOrDefault(l => l.LoanApplicationDocumentId == id);
 
-            if (la == null)
+            if (lad == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            la.LoanStatus = LoanStatusType.CreditInvestigation;
-            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
+            LoanDocumentReviseModel ldrm = new LoanDocumentReviseModel(lad);
 
-            return RedirectToAction("Index", "ComBankLoan");
+            return View(ldrm);
         }
 
-        //Trade Checking
-        public ActionResult TradeChecking(int id)
+        //[Route("requirement/{id}/revise")]
+        [HttpPost]
+        public ActionResult ReviseRequirement(LoanDocumentReviseModel ldrm)
         {
-            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
-
-            if (la == null)
+            if (ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                LoanApplicationDocument lad = db.LoanApplicationDocuments
+                    .FirstOrDefault(l => l.LoanApplicationDocumentId == ldrm.LoanApplicationDocumentId);
+
+                if (lad == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                lad.Status = LoanDocumentStatusType.Revision;
+                lad.Comment = ldrm.Comment;
+
+                db.Entry(lad).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+
+
+                LoanApplication loan = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == lad.LoanApplicationId);
+
+                if (loan == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var documents = db.LoanApplicationDocuments.Include("Files").Where(m => m.LoanApplicationId == loan.LoanApplicationId).ToList();
+                loan.LoanApplicationDocuments = documents;
+
+                return PartialView("DocumentList", documents);
+                //return RedirectToAction("Details", new { id = lad.LoanApplicationId });
             }
 
-            la.LoanStatus = LoanStatusType.TradeChecking;
-            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "ComBankLoan");
-        }
-
-        //Credit Risk
-        public ActionResult CreditRisk(int id)
-        {
-            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
-
-            if (la == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            la.LoanStatus = LoanStatusType.CreditRisk;
-            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "ComBankLoan");
-        }
-
-        //Creating Proposal
-        public ActionResult CreatingProposal(int id)
-        {
-            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
-
-            if (la == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            la.LoanStatus = LoanStatusType.CreatingProposal;
-            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "ComBankLoan");
-        }
-
-        //Analyzing Proposal
-        public ActionResult AnalyzingProposal(int id)
-        {
-            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
-
-            if (la == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            la.LoanStatus = LoanStatusType.AnalyzingProposal;
-            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "ComBankLoan");
-        }
-
-        //Approve Loan
-        public ActionResult ApprovedLoan(int id)
-        {
-            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
-
-            if (la == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            la.LoanStatus = LoanStatusType.Approved;
-            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "ComBankLoan");
-        }
-
-        //Deny Loan
-        public ActionResult DeniedLoan(int id)
-        {
-            LoanApplication la = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == id);
-
-            if (la == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            la.LoanStatus = LoanStatusType.Denied;
-            db.Entry(la).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "ComBankLoan");
+            return View(ldrm);
         }
 
         public ActionResult CommentFile(int? id)
@@ -330,7 +230,109 @@ namespace ReverseSpectre.Controllers.CommercialBank
             // Save entry
             db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = file.LoanApplicationDocument.LoanApplicationId });
+            LoanApplication loan = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == file.LoanApplicationDocument.LoanApplicationId);
+
+            if (loan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var documents = db.LoanApplicationDocuments.Include("Files").Where(m => m.LoanApplicationId == loan.LoanApplicationId).ToList();
+            loan.LoanApplicationDocuments = documents;
+
+            return PartialView("DocumentList", documents);
+
+            //return RedirectToAction("Details", new { id = file.LoanApplicationDocument.LoanApplicationId });
+        }
+
+        [HttpPost]
+        public ActionResult ChangeStatus(int id, int statusType)
+        {
+            // Validation
+            var loan = db.LoanApplications.Find(id);
+            if (loan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var officer = db.AccountingOfficers.FirstOrDefault(m => m.User.UserName == User.Identity.Name);
+            if (loan.Client.AccountingOfficerId != officer.AccountingOfficerId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                // Edit entry
+                loan.LoanStatus = (LoanStatusType)statusType;
+                db.Entry(loan).State = System.Data.Entity.EntityState.Modified;
+
+                // Save entry
+                db.SaveChanges();
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
+
+        public ActionResult EditFileComment(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var file = db.LoanApplicationDocumentFiles.Find(id);
+            if (file == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ViewBag.Id = id;
+            ViewBag.LoanId = file.LoanApplicationDocumentId;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditFileComment(int? id, string comment)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var file = db.LoanApplicationDocumentFiles.Find(id);
+            if (file == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (string.IsNullOrEmpty(comment))
+            {
+                ViewBag.Id = id;
+                ViewBag.LoanId = file.LoanApplicationDocumentId;
+                return View();
+            }
+
+            // Edit entry
+            file.Comment = comment;
+            db.Entry(file).State = System.Data.Entity.EntityState.Modified;
+
+            // Save entry
+            await db.SaveChangesAsync();
+
+            LoanApplication loan = db.LoanApplications.FirstOrDefault(l => l.LoanApplicationId == file.LoanApplicationDocument.LoanApplicationId);
+
+            if (loan == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var documents = db.LoanApplicationDocuments.Include("Files").Where(m => m.LoanApplicationId == loan.LoanApplicationId).ToList();
+            loan.LoanApplicationDocuments = documents;
+
+            return PartialView("DocumentList",loan);
         }
 
     }
