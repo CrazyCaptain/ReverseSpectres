@@ -10,7 +10,7 @@
                     UpdateTargetId = "document-list",
                     HttpMethod = "POST",
                     InsertionMode = InsertionMode.Replace,
-                    OnBegin = "hideSubmit",
+                    OnBegin = "loadSpinner",
                     //OnSuccess = "hideSpinner",
                     //OnFailure = "alertFailure",
                     OnComplete = "hideModal"
@@ -35,7 +35,7 @@
 
     <div class="modal-footer text-center">
         @*<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>*@
-        <button id="upload-submit-button" type="submit" class="btn btn-primary">Upload</button>
+        <button id="upload-submit-button" type="submit" class="btn btn-primary" onclick="loadSpinner()">Upload</button>
     </div>
 
     <script>
@@ -46,5 +46,10 @@
         $('#File').on('change', function () {
             $('#file-name').text($('#File').val().split('\\').pop());
         });
+
+        function loadSpinner() {
+            $('#upload-modal').modal('hide');
+            $('#spinner-modal').modal({ backdrop: 'static', keyboard: false, show: true });
+        }
     </script>
 }

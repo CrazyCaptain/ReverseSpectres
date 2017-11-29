@@ -39,6 +39,8 @@ namespace ReverseSpectre.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var documents = db.LoanApplicationDocuments.Include("Files").Where(m => m.LoanApplicationId == loan.LoanApplicationId).ToList();
+            loan.LoanApplicationDocuments = documents;
 
             return View(loan);
         }

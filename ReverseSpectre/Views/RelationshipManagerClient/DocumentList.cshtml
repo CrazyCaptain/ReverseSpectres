@@ -2,7 +2,6 @@
 @{ 
     List<string> imageTypes = new List<string>() { "jpg", "png" };
 }
-
 <table class="table">
     <tbody>
         <tr>
@@ -12,7 +11,6 @@
             <th>Status</th>
             <th></th>
         </tr>
-
         @foreach (var document in Model)
         {
             if (document.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved)
@@ -22,12 +20,6 @@
                     <td>@document.TimestampCreated.ToString()</td>
                     <td>@document.Comment</td>
                     <td>@document.Status</td>
-                    <td style="text-align:right;">
-                        @Html.ActionLink("Approve", "Approve", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-success" })
-                        @*@Html.ActionLink("Request Revision", "ReviseRequirement", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-warning" })*@
-                        <button class="btn btn-xs btn-warning" onclick="openCommentDocumentModal(@document.LoanApplicationDocumentId)">Request Revision</button>
-                        @Html.ActionLink("Deny", "Deny", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-danger" })
-                    </td>
                 </tr>
             }
             else
@@ -37,15 +29,8 @@
                     <td>@document.TimestampCreated.ToString()</td>
                     <td>@document.Comment</td>
                     <td>@document.Status</td>
-                    <td style="text-align:right;">
-                        @Html.ActionLink("Approve", "Approve", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-success" })
-                        @*@Html.ActionLink("Request Revision", "ReviseRequirement", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-warning" })*@
-                        <button class="btn btn-xs btn-warning" onclick="openCommentDocumentModal(@document.LoanApplicationDocumentId)">Request Revision</button>
-                        @Html.ActionLink("Deny", "Deny", new { id = document.LoanApplicationDocumentId }, new { @class = "btn btn-xs btn-danger" })
-                    </td>
                 </tr>
             }
-
             foreach (var file in document.Files)
             {
                 string fileType = file.FileType.Substring(1);
@@ -63,12 +48,10 @@
                             @file.FileType.Substring(1)
                         }
                     </td>
-                    <td>
-                        @*@Html.ActionLink("Comment on File", "CommentFile", new { id = file.LoanApplicationDocumentFileId }, new { @class = "btn btn-xs btn-default" })*@
-                        <button class="btn btn-xs btn-default" onclick="openCommentFileModal(@file.LoanApplicationDocumentFileId)">Comment on File</button>
-                    </td>
                 </tr>
             }
         }
     </tbody>
 </table>
+
+

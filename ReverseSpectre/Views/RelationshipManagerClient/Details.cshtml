@@ -45,7 +45,10 @@
 <br /><br />
 
 <h4>Required Documents</h4>
-<table class="table">
+<div id="document-list">
+    @Html.Partial("DocumentList", Model.LoanApplicationDocuments)
+</div>
+@*<table class="table">
     <tbody>
         <tr>
             <th>Name</th>
@@ -63,5 +66,42 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@
 
+<!-- Preview Modal -->
+<div id="preview-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Preview Document</h4>
+            </div>
+            <div id="preview-modal-content">
+                <div style="padding:10px;">
+                    <img id="preview-image" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+<style>
+    #preview-image {
+        width: 100%;
+    }
+
+    .form-input {
+        width: 240px;
+    }
+</style>
+}
+
+@section Scripts {
+<script>
+function previewImage(url) {
+    $('#preview-image').attr('src', url);
+    $('#preview-modal').modal('show');
+}
+</script>
+}

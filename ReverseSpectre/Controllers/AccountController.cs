@@ -200,7 +200,8 @@ namespace ReverseSpectre.Controllers
                             "Confirm your account",
                             RenderPartialViewToString("ClientRegistrationEmail", new ClientRegistrationEmailViewModel() { Name = $"{model.ContactInformation.LastName}" }));
 
-                        return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Redirect", "Account");
                     }
                     AddErrors(result);
 

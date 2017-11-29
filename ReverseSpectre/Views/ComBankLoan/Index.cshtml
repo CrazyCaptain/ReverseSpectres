@@ -28,7 +28,7 @@
             foreach (var l in Model)
             {
                 <tr>
-                    <td>@l.Client.User.Email</td>
+                    <td>@l.Client.BusinessName</td>
                     <td>@l.Amount</td>
                     <td>@l.Term months</td>
                     <td>@l.Interest</td>
@@ -41,7 +41,7 @@
                     <td>@l.LoanStatus</td>
                     <td>@l.TimestampCreated</td>
                     <td>
-                        @if (l.LoanApplicationDocuments.Count() == l.LoanApplicationDocuments.Count(a => a.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved))
+                        @*@if (l.LoanApplicationDocuments.Count() == l.LoanApplicationDocuments.Count(a => a.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved))
                         {
                             switch (l.LoanStatus)
                             {
@@ -66,9 +66,9 @@
                                 case ReverseSpectre.Models.LoanStatusType.Approved:
                                     break;
                             }
-                        }
+                        }*@
                     </td>
-                    <td>@Html.ActionLink("Deny", "DeniedLoan", new { id = l.LoanApplicationId })</td>
+                    <td>@*@Html.ActionLink("Deny", "DeniedLoan", new { id = l.LoanApplicationId })*@</td>
                     <td style="text-align:right;">@Html.ActionLink("View Loan", "Details", new { id = l.LoanApplicationId })</td>
                 </tr>
             }

@@ -32,7 +32,14 @@
             <p><strong>Term:</strong> @Model.Term months</p>
         </div>
         <div class="row">
-            <p><strong>Interest Rate:</strong> @interest</p>
+            <span style="display:inline-block;">
+                <strong>Interest Rate:</strong> 
+                @using (Html.BeginForm("EditInterest", "ComBankLoan", FormMethod.Post, new { style = "display:inline;" })) {
+                    @Html.Hidden("id", Model.LoanApplicationId)
+                    <input class="form-control" style="display:inline-block;width:100px;" name="interest" id="Interest" placeholder="0.0125" required value="@((Model.Interest == 0) ? "" : Model.Interest.ToString())"/>
+                    <button class="btn btn-primary">Update</button>
+                }
+            </span>
         </div>
     </div>
 
@@ -73,7 +80,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Upload Document</h4>
+                <h4 class="modal-title">Preview Document</h4>
             </div>
             <div id="preview-modal-content">
                 <div style="padding:10px;">

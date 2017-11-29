@@ -37,7 +37,7 @@ namespace ReverseSpectre.Controllers.CommercialBank
             {
                 // if no client id provided
 
-                var loans = db.LoanApplications.ToList();
+                var loans = db.LoanApplications.Include("Client").ToList();
                 return View(loans);
             }
         }
@@ -333,6 +333,19 @@ namespace ReverseSpectre.Controllers.CommercialBank
             loan.LoanApplicationDocuments = documents;
 
             return PartialView("DocumentList",loan);
+        }
+
+        public ActionResult EditInterest(int id, double interest)
+        {
+            var loan = db.LoanApplications.Find(id);
+            if (loan != null && interest >= 0 && interest <= 1)
+            {
+                loan.Interest = interest;
+                db.Entry(loan).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Details", new { id = id });
         }
 
     }
