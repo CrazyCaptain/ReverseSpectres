@@ -38,7 +38,8 @@
                         </font>
                         / @l.LoanApplicationDocuments.Count() approved
                     </td>
-                    <td>@l.LoanStatus</td>
+                    @*<td>@l.LoanStatus</td>*@
+                    <td>@(EnumHelper<ReverseSpectre.Models.LoanStatusType>.GetDisplayValue(l.LoanStatus))</td>
                     <td>@l.TimestampCreated</td>
                     <td>
                         @*@if (l.LoanApplicationDocuments.Count() == l.LoanApplicationDocuments.Count(a => a.Status == ReverseSpectre.Models.LoanDocumentStatusType.Approved))

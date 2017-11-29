@@ -40,7 +40,7 @@
         {
             <tr>
                 <td>@item.Client.BusinessName</td>
-                <td>@item.LoanStatus</td>
+                <td>@(EnumHelper<ReverseSpectre.Models.LoanStatusType>.GetDisplayValue(item.LoanStatus))</td>
                 <td>@item.Amount</td>
                 <td>@item.Term</td>
                 <td>@Html.ActionLink("View Loan", "Details", new { id = item.LoanApplicationId })</td>
