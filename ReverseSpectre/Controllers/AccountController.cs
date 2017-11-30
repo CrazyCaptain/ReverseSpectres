@@ -181,6 +181,9 @@ namespace ReverseSpectre.Controllers
                         Client client = new Client(model, user, invitation);
                         db.Clients.Add(client);
 
+                        // Add client employment info
+                        db.EmploymentInformations.Add(new ContactInformation(model.ContactInformation,client));
+
                         // Create loan entry
                         LoanApplication application = new LoanApplication(invitation, client);
                         db.LoanApplications.Add(application);

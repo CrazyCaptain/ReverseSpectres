@@ -245,6 +245,7 @@
     <Compile Include="Controllers\RelationshipManager\RelationshipManagerDashboardController.cs" />
     <Compile Include="Controllers\RelationshipManager\RelationshipManagerClientController.cs" />
     <Compile Include="Controllers\SalesDirector\SalesDirectorDashboardController.cs" />
+    <Compile Include="Controllers\SmsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -337,6 +338,8 @@
     <None Include="Properties\PublishProfiles\reversehack - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\reversehackdemo - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\reversehackdemo - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\rs-sms-test - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\rs-sms-test - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -422,6 +425,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Client\" />
     <Folder Include="Views\SalesDirectorDashboard\" />
+    <Folder Include="Views\Sms\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
