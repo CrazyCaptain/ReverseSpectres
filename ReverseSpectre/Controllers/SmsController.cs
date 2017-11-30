@@ -175,7 +175,7 @@ namespace ReverseSpectre.Controllers
                                 {
                                     StringBuilder s_msg = new StringBuilder();
 
-                                    loan.LoanApplicationDocuments.ForEach(l => s_msg.Append($"{l.Name}, {l.Status.ToString()}."));
+                                    loan.LoanApplicationDocuments.ForEach(l => s_msg.Append($"{l.Name}, {l.Status.ToString()}. "));
                                     sendSMS(s_msg.ToString(), client.SmsAccessToken, customer_number.Substring(4));
                                 }
                                 catch (Exception ex)
@@ -194,7 +194,7 @@ namespace ReverseSpectre.Controllers
                             {
                                 StringBuilder s_msg = new StringBuilder();
 
-                                s_msg.Append($" Loan ID {loan.LoanApplicationId} with Status {loan.LoanStatus.ToString()} and Document Status {loan.LoanApplicationDocuments.Count(ld => ld.Status == LoanDocumentStatusType.Approved)}/{loan.LoanApplicationDocuments.Count()} approved.");
+                                s_msg.Append($" Loan ID {loan.LoanApplicationId} with {loan.LoanStatus.ToString()} status and {loan.LoanApplicationDocuments.Count(ld => ld.Status == LoanDocumentStatusType.Approved)}/{loan.LoanApplicationDocuments.Count()} approved documents.");
                                 sendSMS(s_msg.ToString(), client.SmsAccessToken, customer_number.Substring(4));
                             }
                             catch (Exception ex)
